@@ -7,14 +7,13 @@ function autoload($class)
     $file = strtolower(str_replace("\\", DIRECTORY_SEPARATOR, trim($class, "\\"))).".php";
 
 
-        $combined = SMOOTH_PATH.DIRECTORY_SEPARATOR.$file;
+    $combined = SMOOTH_PATH.DIRECTORY_SEPARATOR.$file;
 
-        if (file_exists($combined))
-        {
-            include($combined);
-            return;
-        }
-
+    if (file_exists($combined))
+    {
+        include($combined);
+        return;
+    }
 
     throw new Exception("{$class} not found");
 }
@@ -30,3 +29,7 @@ class Autoloader
 
 spl_autoload_register('autoload');
 spl_autoload_register(array('autoloader', 'autoload'));
+
+
+// check the php settings
+Framework\Check\Environment::check_php_version();
