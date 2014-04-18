@@ -22,7 +22,10 @@ class Hello extends Framework\Base {
 //    }
 }
 
-$hello = new Hello();
-$hello->world = null;
-echo $hello->world;
-var_dump($hello->world);
+$configuration = new Framework\Configuration(array(
+    "type" => "ini"
+));
+
+$configuration = $configuration->initialize();
+$configuration->parse(__DIR__.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'configuration'.DIRECTORY_SEPARATOR.'mysql');
+
