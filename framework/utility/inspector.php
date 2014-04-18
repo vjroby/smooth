@@ -1,10 +1,10 @@
 <?php
 
-namespace Framework\Utility;
+namespace Framework\Utility
 {
 
-    use Framework\Utility\ArrayMethods as ArrayMethods;
-    use Framework\Utility\StringMethods as StringMethods;
+    //use Framework\Utility\ArrayMethods as ArrayMethods;
+    //use Framework\Utility\StringMethods as StringMethods;
 
     class Inspector
     {
@@ -107,32 +107,32 @@ namespace Framework\Utility;
 
         public function getClassProperties()
         {
-            if (!isset($_properties))
+            if (!isset($this->_properties))
             {
                 $properties = $this->_getClassProperties();
 
                 foreach ($properties as $property)
                 {
-                    $_properties[] = $property->getName();
+                    $this->_properties[] = $property->getName();
                 }
             }
 
-            return $_properties;
+            return $this->_properties;
         }
 
         public function getClassMethods()
         {
-            if (!isset($_methods))
+            if (!isset($this->_methods))
             {
                 $methods = $this->_getClassMethods();
 
                 foreach ($methods as $method)
                 {
-                    $_methods[] = $method->getName();
+                    $this->_methods[] = $method->getName();
                 }
             }
 
-            return $_methods;
+            return $this->_methods;
         }
 
         public function getPropertyMeta($property)

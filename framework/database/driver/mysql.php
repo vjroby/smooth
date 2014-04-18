@@ -1,12 +1,11 @@
 <?php
+namespace Framework\Database\Driver
+{
+    class Mysql {
 
-
-namespace Framework\Database\Driver;
-
-
-class Mysql {
-
-    public function  __construct(){
-        echo 'Mysql class loaded';
+        public function  __construct(){
+            echo 'Mysql class loaded';
+        }
     }
-} 
+}
+

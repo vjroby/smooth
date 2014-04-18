@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Utility;
+namespace Framework\Utility
 {
 
     class ArrayMethods {
