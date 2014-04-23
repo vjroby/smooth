@@ -65,11 +65,40 @@ namespace Framework\Cache\Driver
         }
 
         public function get($key, $default = null){
-            if ($this->_isValidService()){
+            if (!$this->_isValidService()){
                 throw new Exception\Service("Not connected to a valid service");
             }
 
+            $value = $this->_service->get($key, MEMCACHE_COMPRESSED);
 
+            if ($value)
+            {
+                return $value;
+            }
+            return $default;
+
+        }
+
+        public function set($key, $value, $duration = 120)
+        {
+            if (!$this->_isValidService())
+            {
+                throw new Exception\Service("Not connected to a valid service");
+            }
+
+            $this->_service->set($key, $value, MEMCACHE_COMPRESSED, $duration);
+            return $this;
+        }
+
+        public function erase($key)
+        {
+            if (!$this->_isValidService())
+            {
+                throw new Exception\Service("Not connected to a valid service");
+            }
+
+            $this->_service->delete($key);
+            return $this;
         }
 
     }
