@@ -63,5 +63,27 @@ namespace Framework\Utility
 
             return $return;
         }
+
+        public static function first($array)
+        {
+            if (sizeof($array) == 0)
+            {
+                return null;
+            }
+
+            $keys = array_keys($array);
+            return $array[$keys[0]];
+        }
+
+        public static function last($array)
+        {
+            if (sizeof($array) == 0)
+            {
+                return null;
+            }
+
+            $keys = array_keys($array);
+            return $array[$keys[sizeof($keys) - 1]];
+        }
     }
 }

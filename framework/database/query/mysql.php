@@ -10,6 +10,7 @@ namespace Framework\Database\Query
         {
             $sql = $this->_buildSelect();
             $result = $this->connector->execute($sql);
+            var_dump($result);
 
             if ($result === false)
             {
@@ -18,10 +19,10 @@ namespace Framework\Database\Query
             }
 
             $rows = array();
-
-            for ($i = 0; $i < $result->num_rows; $i++)
+            $count = $result->rowCount();
+            for ($i = 0; $i < $count; $i++)
             {
-                $rows[] = $result->fetch_array(MYSQLI_ASSOC);
+                $rows[] = $result->fetch(\PDO::FETCH_ASSOC);
             }
 
             return $rows;

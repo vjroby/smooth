@@ -8,6 +8,8 @@ namespace Framework\Database\Connector
 
         protected $_service;
 
+        protected $_statement;
+
         /**
          * @readwrite
          */
@@ -52,7 +54,7 @@ namespace Framework\Database\Connector
         protected function _isValidService()
         {
             $isEmpty = empty($this->_service);
-            $isInstance = $this->_service instanceof \MySQLi;
+            $isInstance = $this->_service instanceof \PDO;
 
             if ($this->isConnected && $isInstance && !$isEmpty)
             {
@@ -67,17 +69,15 @@ namespace Framework\Database\Connector
         {
             if (!$this->_isValidService())
             {
-                $this->_service = new \MySQLi(
-                    $this->_host,
-                    $this->_username,
-                    $this->_password,
-                    $this->_schema,
-                    $this->_port
-                );
-
-                if ($this->_service->connect_error)
-                {
-                    throw new Exception\Service("Unable to connect to service");
+                try{
+                    //PDO('mysql:host=localhost;dbname=test', $user, $pass);
+                    $this->_service = new \PDO('mysql:host='.$this->_host.';dbname='.$this->_schema.';port='.$this->_port,
+                        $this->_username,
+                        $this->_password,
+                        array(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION)
+                    );
+                }catch (\PDOException $e){
+                    throw new Exception\Service("Unable to connect to service. Message: ".$e->getMessage());
                 }
 
                 $this->isConnected = true;
@@ -113,11 +113,17 @@ namespace Framework\Database\Connector
             {
                 throw new Exception\Service("Not connected to a valid service");
             }
-
-            return $this->_service->query($sql);
+            $this->_statement = $this->_service->prepare($sql);
+            $this->_statement->execute();
+            return $this->_statement;
         }
 
         // escapes the provided value to make it safe for queries
+        /**
+         * @param $value
+         * @return mixed
+         * @throws \Framework\Database\Exception\Service
+         */
         public function escape($value)
         {
             if (!$this->_isValidService())
@@ -125,7 +131,7 @@ namespace Framework\Database\Connector
                 throw new Exception\Service("Not connected to a valid service");
             }
 
-            return $this->_service->real_escape_string($value);
+            return $this->_statement->prepare($value);
         }
 
         // returns the ID of the last row
@@ -137,7 +143,7 @@ namespace Framework\Database\Connector
                 throw new Exception\Service("Not connected to a valid service");
             }
 
-            return $this->_service->insert_id;
+            return $this->_statement->lastInsertId();
         }
 
         // returns the number of rows affected
@@ -149,7 +155,7 @@ namespace Framework\Database\Connector
                 throw new Exception\Service("Not connected to a valid service");
             }
 
-            return $this->_service->affected_rows;
+            return $this->_statement->rowCount();
         }
 
         // returns the last error of occur
@@ -159,8 +165,8 @@ namespace Framework\Database\Connector
             {
                 throw new Exception\Service("Not connected to a valid service");
             }
-
-            return $this->_service->error;
+            $error = $this->_service->errorInfo();
+            return $error[0].':'.$error[1].' - '.$error[2];
         }
     }
 }

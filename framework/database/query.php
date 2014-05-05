@@ -61,8 +61,8 @@ namespace Framework\Database
         {
             if (is_string($value))
             {
-                $escaped = $this->connector->escape($value);
-                return "'{$escaped}'";
+                // no used in PDO must use prepare $escaped = $this->connector->escape($value);
+                return "'{$value}'";
             }
 
             if (is_array($value))
@@ -88,7 +88,7 @@ namespace Framework\Database
                 return (int) $value;
             }
 
-            return $this->connector->escape($value);
+            return $value;
         }
 
         protected function _buildSelect()
@@ -123,6 +123,7 @@ namespace Framework\Database
             $_where = $this->where;
             if (!empty($_where))
             {
+                // TODO bind_params
                 $joined = join(" AND ", $_where);
                 $where = "WHERE {$joined}";
             }
@@ -157,7 +158,7 @@ namespace Framework\Database
             $fields = array();
             $values = array();
             $template = "INSERT INTO `%s` (`%s`) VALUES (%s)";
-
+            // TODO bind_params
             foreach ($data as $field => $value)
             {
                 $fields[] = $field;
@@ -175,7 +176,7 @@ namespace Framework\Database
             $parts = array();
             $where = $limit = "";
             $template = "UPDATE %s SET %s %s %s";
-
+            // TODO bind_params
             foreach ($data as $field => $value)
             {
                 $parts[] = "{$field} = ".$this->_quote($value);
@@ -208,6 +209,7 @@ namespace Framework\Database
             $_where = $this->where;
             if (!empty($_where))
             {
+                // TODO bind_params
                 $joined = join(", ", $_where);
                 $where = "WHERE {$joined}";
             }
@@ -244,6 +246,7 @@ namespace Framework\Database
 
             if ($isInsert)
             {
+                // TODO pdo
                 return $this->_connector->lastInsertId;
             }
 
@@ -259,7 +262,7 @@ namespace Framework\Database
             {
                 throw new Exception\Sql();
             }
-
+            // TODO pdo
             return $this->_connector->affectedRows;
         }
 
