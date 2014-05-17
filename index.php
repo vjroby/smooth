@@ -66,3 +66,4 @@ echo "affected =>{$affected}\n";
 $count = $database->query()->from("users")
     ->count();
 echo "count =>{$count}\n";
+echo '<div>test</div>';
