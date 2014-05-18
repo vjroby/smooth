@@ -67,3 +67,5 @@ $count = $database->query()->from("users")
     ->count();
 echo "count =>{$count}\n";
 echo '<div>test</div>';
+
+include "tests".DIRECTORY_SEPARATOR.'test.php';
