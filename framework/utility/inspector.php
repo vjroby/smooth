@@ -115,7 +115,7 @@ namespace Framework\Utility
                 {
                     $this->_properties[] = $property->getName();
                 }
-            }k
+            }
 
             return $this->_properties;
         }
