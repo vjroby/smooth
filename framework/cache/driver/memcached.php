@@ -54,6 +54,7 @@ namespace Framework\Cache\Driver
             }catch (\Exception $e){
                 throw new Exception\Service("Unable to connect to service");
             }
+            return $this;
         }
 
         public function disconnect(){

@@ -107,7 +107,7 @@ namespace Framework\Utility
 
         public function getClassProperties()
         {
-            if (!isset($this->_properties))
+            if (count($this->_properties) == 0)
             {
                 $properties = $this->_getClassProperties();
 
@@ -122,7 +122,7 @@ namespace Framework\Utility
 
         public function getClassMethods()
         {
-            if (!isset($this->_methods))
+            if (count($this->_methods) == 0)
             {
                 $methods = $this->_getClassMethods();
 

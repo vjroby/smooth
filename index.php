@@ -68,4 +68,6 @@ $count = $database->query()->from("users")
 echo "count =>{$count}\n";
 echo '<div>test</div>';
 
-include "tests".DIRECTORY_SEPARATOR.'test.php';
+\Framework\Test::start();
+
+var_dump(\Framework\Test::run());
