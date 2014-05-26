@@ -3,9 +3,9 @@
 namespace Tests\Cache\Memcached
 {
     use \Framework as Framework;
-    use Tests\Test;
+    use Tests\Cache\TestCache as TestCache;
 
-    class Memcached extends Test {
+    class Memcached extends TestCache {
 
         public function __construct(){
             echo 'Tests Test Cache Memcached loaded.'.PHP_EOL;
