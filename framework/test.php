@@ -19,7 +19,8 @@ namespace Framework
         {
             if (!is_null($before))
             {
-                $before(self::_tests);
+                call_user_func($before, self::_tests);
+//                $before(self::_tests);
             }
 
             $passed = array();
@@ -59,7 +60,8 @@ namespace Framework
 
             if ($after)
             {
-                $after(self::_tests);
+                call_user_func($after, self::_tests);
+//                $after(self::_tests);
             }
 
             return array(

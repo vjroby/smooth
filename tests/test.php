@@ -9,10 +9,10 @@ namespace Tests{
 //            new Cache\Memcached\Memcached();
 //            new Configuration\TestConfiguration();
 //            new Configuration\Ini\Ini();
-            new Database\TestDatabase();
-            new Database\Connector\Mysql();
-            new Database\Query\Mysql();
-
+            //new Database\TestDatabase();
+            //new Database\Connector\Mysql();
+            //new Database\Query\Mysql();
+             new Model\TestModel();
         }
     }
 }

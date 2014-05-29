@@ -157,8 +157,13 @@ namespace Framework
         public function getTable()
         {
             if (empty($this->_table))
+                $className = get_class($this);
+                // get class name without namespace
+                if (preg_match('@\\\\([\w]+)$@', $className, $matches)) {
+                    $className = $matches[1];
+                }
             {
-                $this->_table = strtolower(StringMethods::singular(get_class($this)));
+                $this->_table = strtolower(StringMethods::singular($className));
             }
 
             return $this->_table;
