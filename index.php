@@ -40,7 +40,7 @@ $database= new Framework\Database(array(
 ));
 
 $database = $database->initialize()->connect();
-
+$database->execute('bla');
 
 $all = $database->query()
     ->from("users", array(

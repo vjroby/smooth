@@ -3,9 +3,9 @@
 namespace Tests\Configuration\Ini
 {
     use \Framework as Framework;
-    use Tests\Configuration\TestConfiguration as Configuration;
+    use Tests\Configuration\TestConfiguration as TestConfiguration;
 
-    class Ini extends Configuration{
+    class Ini extends TestConfiguration{
 
         public function __construct(){
             echo 'Tests Ini loaded.'.PHP_EOL;

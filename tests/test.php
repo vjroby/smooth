@@ -7,8 +7,11 @@ namespace Tests{
             echo 'Tests class loaded'.PHP_EOL;
 //            new Cache\TestCache();
 //            new Cache\Memcached\Memcached();
-            new Configuration\TestConfiguration();
-            new Configuration\Ini\Ini();
+//            new Configuration\TestConfiguration();
+//            new Configuration\Ini\Ini();
+            new Database\TestDatabase();
+            new Database\Connector\Mysql();
+            new Database\Query\Mysql();
 
         }
     }
