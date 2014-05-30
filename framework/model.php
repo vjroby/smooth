@@ -157,12 +157,9 @@ namespace Framework
         public function getTable()
         {
             if (empty($this->_table))
-                $className = get_class($this);
-                // get class name without namespace
-                if (preg_match('@\\\\([\w]+)$@', $className, $matches)) {
-                    $className = $matches[1];
-                }
             {
+                $className = StringMethods::classNameWithoutNamespace(get_class($this));
+
                 $this->_table = strtolower(StringMethods::singular($className));
             }
 
@@ -192,7 +189,8 @@ namespace Framework
             {
                 $primaries = 0;
                 $columns = array();
-                $class = get_class($this);
+                $class = StringMethods::classNameWithoutNamespace(get_class($this));
+
                 $types = $this->types;
 
                 $inspector = new Inspector($this);
@@ -316,6 +314,7 @@ namespace Framework
             }
 
             $first = $query->first();
+//            $class = StringMethods::classNameWithoutNamespace(get_class($this));
             $class = get_class($this);
 
             if ($first)
@@ -357,7 +356,7 @@ namespace Framework
             }
 
             $rows = array();
-            $class = get_class($this);
+            $class = StringMethods::classNameWithoutNamespace(get_class($this));
 
             foreach ($query->all() as $row)
             {

@@ -195,5 +195,14 @@ namespace Framework\Utility
 
             return $result;
         }
+
+        public static function classNameWithoutNamespace($className){
+
+            if (preg_match('@\\\\([\w]+)$@', $className, $matches)) {
+                $className = $matches[1];
+            }
+
+            return $className;
+        }
     }
 }

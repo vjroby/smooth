@@ -54,6 +54,79 @@ namespace Tests\Model
                 "Model"
             );
         }
+
+        public static function inserts(){
+            $database = Framework\Registry::get('database');
+
+            Framework\Test::add(
+                function() use ($database)
+                {
+                    $example = new Model\Example(array(
+                        "name" => "foo",
+                        "created" => date("Y-m-d H:i:s")
+                    ));
+
+                    return ($example->save() > 0);
+                },
+                "Model inserts rows",
+                "Model"
+            );
+        }
+
+        public static function fetchesNumberRows(){
+            $database = Framework\Registry::get('database');
+
+            Framework\Test::add(
+                function() use ($database)
+                {
+                    return (Model\Example::count() == 1);
+                },
+                "Model fetches number of rows",
+                "Model"
+            );
+        }
+
+        public static function saveMultipleTimes(){
+            $database = Framework\Registry::get('database');
+
+            Framework\Test::add(
+                function() use ($database)
+                {
+                    $example = new Model\Example(array(
+                        "name" => "foo",
+                        "created" => date("Y-m-d H:i:s")
+                    ));
+
+                    $example->save();
+                    $example->save();
+                    $example->save();
+
+                    return (Model\Example::count() == 2);
+                },
+                "Model saves single row multiple times",
+                "Model"
+            );
+        }
+
+        public static function update(){
+            $database = Framework\Registry::get('database');
+
+            Framework\Test::add(
+                function() use ($database)
+                {
+                    $example = new Model\Example(array(
+                        "id" => 1,
+                        "name" => "hello",
+                        "created" => date("Y-m-d H:i:s")
+                    ));
+                    $example->save();
+
+                    return (Model\Example::first()->name == "hello");
+                },
+                "Model updates rows",
+                "Model"
+            );
+        }
     }
 }
  
