@@ -57,7 +57,7 @@ namespace Tests\Configuration\Ini
                     ));
 
                     $configuration = $configuration->initialize();
-                    $parsed = $configuration->parse("app/configuration/smooth");
+                    $parsed = $configuration->parse("application/configuration/smooth");
 
                     return ($parsed->config->first == "hello" && $parsed->config->second->second == "bar");
                 },

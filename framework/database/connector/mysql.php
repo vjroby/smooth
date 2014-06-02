@@ -7,7 +7,9 @@ namespace Framework\Database\Connector
     class Mysql extends Database\Connector{
 
         protected $_service;
-
+        /**
+         * @readwrite
+         */
         protected $_statement;
 
         /**
@@ -120,7 +122,7 @@ namespace Framework\Database\Connector
                 throw new Exception\Service("Not connected to a valid service");
             }
             try{
-                $this->_statement = $this->_service->prepare($sql);
+
                 $this->_statement->execute();
                 return $this->_statement;
             }catch (\PDOException $e){

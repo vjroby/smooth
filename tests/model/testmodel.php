@@ -4,7 +4,7 @@ namespace Tests\Model
 {
     use Tests\Test as Test;
     use \Framework as Framework;
-    use \App\Model as Model;
+    use \Application\Model as Model;
 
     class TestModel {
         public function __construct(){
@@ -124,6 +124,24 @@ namespace Tests\Model
                     return (Model\Example::first()->name == "hello");
                 },
                 "Model updates rows",
+                "Model"
+            );
+        }
+
+        public static function delete(){
+            $database = Framework\Registry::get('database');
+
+            Framework\Test::add(
+                function() use ($database)
+                {
+                    $example = new Model\Example(array(
+                        "id" => 2
+                    ));
+                    $example->delete();
+
+                    return (Model\Example::count() == 1);
+                },
+                "Model deletes rows",
                 "Model"
             );
         }

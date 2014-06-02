@@ -10,7 +10,6 @@ namespace Framework\Database\Query
         {
             $sql = $this->_buildSelect();
             $result = $this->connector->execute($sql);
-            var_dump($result);
 
             if ($result === false)
             {

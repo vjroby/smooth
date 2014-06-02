@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model
+namespace Application\Model
 {
     use \Framework\Model as Model;
     class Example extends Model{

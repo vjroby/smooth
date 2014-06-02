@@ -51,6 +51,10 @@ namespace Framework\Database
          * @read
          */
         protected $_where = array();
+        /**
+         * @readwrite
+         */
+        protected  $_type;
 
         protected function _getExceptionForImplementation($method)
         {
@@ -157,16 +161,17 @@ namespace Framework\Database
         {
             $fields = array();
             $values = array();
-            $template = "INSERT INTO `%s` (`%s`) VALUES (%s)";
+            $template = "INSERT INTO %s (%s) VALUES (%s)";
             // TODO bind_params
             foreach ($data as $field => $value)
             {
                 $fields[] = $field;
-                $values[] = $this->_quote($value);
+                $values[] = ':'.$field;
             }
 
-            $fields = join("`, `", $fields);
             $values = join(", ", $values);
+            $fields = join(", ", $fields);
+
 
             return sprintf($template, $this->from, $fields, $values);
         }
@@ -236,6 +241,9 @@ namespace Framework\Database
             {
                 $sql = $this->_buildUpdate($data);
             }
+            $this->_connector->_statement = $this->_connector->prepare($sql);
+            $this->bind_params($data);
+
 
             $result = $this->_connector->execute($sql);
 
@@ -246,7 +254,7 @@ namespace Framework\Database
 
             if ($isInsert)
             {
-                // TODO pdo
+
                 return $this->_connector->lastInsertId;
             }
 
@@ -262,7 +270,7 @@ namespace Framework\Database
             {
                 throw new Exception\Sql();
             }
-            // TODO pdo
+
             return $this->_connector->affectedRows;
         }
 
@@ -397,6 +405,50 @@ namespace Framework\Database
             }
 
             return $row["rows"];
+        }
+
+        public function bind_params($params = array()){
+            $count = 'A';
+            $param_name = 'param';
+            if(!empty($params)) {
+
+                foreach ($params as $key => $value) {
+                    switch (gettype($value)){
+                        case 'integer':
+                            $type = \PDO::PARAM_INT;
+                            $value = (integer)$value;
+                            break;
+                        case 'string':
+                            $type = \PDO::PARAM_STR;
+                            $value = (string)$value;
+                            break;
+                        case 'boolean':
+                            $type = \PDO::PARAM_BOOL;
+                            $value = (boolean)$value;
+                            break;
+                        case 'double':
+                            $type = \PDO::PARAM_STR;
+                            $value = (string)$value;
+                            break;
+                        case 'blob':
+                            $type = \PDO::PARAM_LOB;
+                            $value = (string)$value;
+                            break;
+                        case 'NULL':
+                            $type = \PDO::PARAM_NULL;
+                            break;
+                        default:
+                            NULL;
+                            break;
+                    }
+                    if (is_int($key)){
+                        $key = $param_name.$count;
+                        $count++;
+                    }
+                    $this->_connector->statement->bindValue($key, $value, $type);
+
+                }
+            }
         }
     }
 }

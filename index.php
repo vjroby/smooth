@@ -8,7 +8,7 @@ $configuration = new Framework\Configuration(array(
 ));
 
 $configuration = $configuration->initialize();
-$configuration->parse(__DIR__.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'configuration'.DIRECTORY_SEPARATOR.'mysql');
+$configuration->parse(__DIR__.DIRECTORY_SEPARATOR.'application'.DIRECTORY_SEPARATOR.'configuration'.DIRECTORY_SEPARATOR.'mysql');
 
 //$router = new Framework\Router();
 //$router->addRoute(
