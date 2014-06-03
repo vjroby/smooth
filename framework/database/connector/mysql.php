@@ -126,6 +126,7 @@ namespace Framework\Database\Connector
             }
             try{
                 $this->_statement = $this->_service->prepare($sql);
+                $this->bind_params($this->_statement, $params);
                 $this->_statement->execute();
                 return $this->_statement;
             }catch (\PDOException $e){
@@ -133,6 +134,50 @@ namespace Framework\Database\Connector
                 return false;
             }
 
+        }
+
+        public function bind_params($statement,$params = array()){
+            $count = 'A';
+            $param_name = 'param';
+            if(!empty($params)) {
+
+                foreach ($params as $key => $value) {
+                    switch (gettype($value)){
+                        case 'integer':
+                            $type = \PDO::PARAM_INT;
+                            $value = (integer)$value;
+                            break;
+                        case 'string':
+                            $type = \PDO::PARAM_STR;
+                            $value = (string)$value;
+                            break;
+                        case 'boolean':
+                            $type = \PDO::PARAM_BOOL;
+                            $value = (boolean)$value;
+                            break;
+                        case 'double':
+                            $type = \PDO::PARAM_STR;
+                            $value = (string)$value;
+                            break;
+                        case 'blob':
+                            $type = \PDO::PARAM_LOB;
+                            $value = (string)$value;
+                            break;
+                        case 'NULL':
+                            $type = \PDO::PARAM_NULL;
+                            break;
+                        default:
+                            NULL;
+                            break;
+                    }
+                    if (is_int($key)){
+                        $key = $param_name.$count;
+                        $count++;
+                    }
+                    $statement->bindValue($key, $value, $type);
+
+                }
+            }
         }
 
         // escapes the provided value to make it safe for queries

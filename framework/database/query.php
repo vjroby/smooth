@@ -247,7 +247,7 @@ namespace Framework\Database
                 $sql = $this->_buildUpdate($data);
             }
             $this->_statement = $this->_connector->service->prepare($sql);
-            $this->bind_params($data);
+            $this->_connector->bind_params($this->_statement,$data);
 
 
             $result = $this->_statement->execute();
@@ -412,49 +412,7 @@ namespace Framework\Database
             return $row["rows"];
         }
 
-        public function bind_params($params = array()){
-            $count = 'A';
-            $param_name = 'param';
-            if(!empty($params)) {
 
-                foreach ($params as $key => $value) {
-                    switch (gettype($value)){
-                        case 'integer':
-                            $type = \PDO::PARAM_INT;
-                            $value = (integer)$value;
-                            break;
-                        case 'string':
-                            $type = \PDO::PARAM_STR;
-                            $value = (string)$value;
-                            break;
-                        case 'boolean':
-                            $type = \PDO::PARAM_BOOL;
-                            $value = (boolean)$value;
-                            break;
-                        case 'double':
-                            $type = \PDO::PARAM_STR;
-                            $value = (string)$value;
-                            break;
-                        case 'blob':
-                            $type = \PDO::PARAM_LOB;
-                            $value = (string)$value;
-                            break;
-                        case 'NULL':
-                            $type = \PDO::PARAM_NULL;
-                            break;
-                        default:
-                            NULL;
-                            break;
-                    }
-                    if (is_int($key)){
-                        $key = $param_name.$count;
-                        $count++;
-                    }
-                    $this->_statement->bindValue($key, $value, $type);
-
-                }
-            }
-        }
     }
 }
  
