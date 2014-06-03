@@ -13,6 +13,11 @@ namespace Framework\Database
         protected $_connector;
 
         /**
+         * @readwrite
+         */
+        protected $_statement;
+
+        /**
          * @read
          */
         protected $_from;
@@ -241,11 +246,11 @@ namespace Framework\Database
             {
                 $sql = $this->_buildUpdate($data);
             }
-            $this->_connector->_statement = $this->_connector->prepare($sql);
+            $this->_statement = $this->_connector->service->prepare($sql);
             $this->bind_params($data);
 
 
-            $result = $this->_connector->execute($sql);
+            $result = $this->_statement->execute();
 
             if ($result === false)
             {
@@ -445,7 +450,7 @@ namespace Framework\Database
                         $key = $param_name.$count;
                         $count++;
                     }
-                    $this->_connector->statement->bindValue($key, $value, $type);
+                    $this->_statement->bindValue($key, $value, $type);
 
                 }
             }

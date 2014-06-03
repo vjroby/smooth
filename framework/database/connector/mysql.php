@@ -6,6 +6,9 @@ namespace Framework\Database\Connector
 
     class Mysql extends Database\Connector{
 
+        /**
+         * @readwrite
+         */
         protected $_service;
         /**
          * @readwrite
@@ -115,14 +118,14 @@ namespace Framework\Database\Connector
         }
 
         // executes the provided SQL statement
-        public function execute($sql)
+        public function execute($sql, $params = array())
         {
             if (!$this->_isValidService())
             {
                 throw new Exception\Service("Not connected to a valid service");
             }
             try{
-
+                $this->_statement = $this->_service->prepare($sql);
                 $this->_statement->execute();
                 return $this->_statement;
             }catch (\PDOException $e){
