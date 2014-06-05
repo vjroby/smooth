@@ -23,6 +23,25 @@ namespace Framework
 
         public function initialize()
         {
+
+            if (!$this->type)
+            {
+                $configuration = Registry::get("configuration");
+
+                if ($configuration)
+                {
+                    $configuration = $configuration->initialize();
+                    $parsed = $configuration->parse("configuration/database");
+
+                    if (!empty($parsed->database->default) && !empty($parsed->database->default->type))
+                    {
+                        $this->type = $parsed->database->default->type;
+                        unset($parsed->database->default->type);
+                        $this->options = (array) $parsed->database->default;
+                    }
+                }
+            }
+
             if (!$this->type)
             {
                 throw new Exception\Argument("Invalid type");

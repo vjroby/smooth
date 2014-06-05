@@ -23,7 +23,7 @@ namespace Framework
 
         public function initialize(){
             if (!$this->_type){
-                throw new Exception\Argument("Invalid tyepe");
+                throw new Exception\Argument("Invalid type");
             }
 
             switch ($this->_type){
