@@ -22,22 +22,42 @@ namespace Framework
         }
 
         public function initialize(){
-            if (!$this->_type){
+
+            if (!$this->type)
+            {
+                $configuration = Registry::get("configuration");
+
+                if ($configuration)
+                {
+                    $configuration = $configuration->initialize();
+                    $parsed = $configuration->parse("configuration/cache");
+
+                    if (!empty($parsed->cache->default) && !empty($parsed->cache->default->type))
+                    {
+                        $this->type = $parsed->cache->default->type;
+                        unset($parsed->cache->default->type);
+                        $this->options = (array) $parsed->cache->default;
+                    }
+                }
+            }
+
+            if (!$this->type)
+            {
                 throw new Exception\Argument("Invalid type");
             }
 
-            switch ($this->_type){
-
+            switch ($this->type)
+            {
                 case "memcached":
-                    {
-                        return new Cache\Driver\Memcached($this->_options);
-                        break;
-                    }
+                {
+                    return new Cache\Driver\Memcached($this->options);
+                    break;
+                }
                 default:
                     {
                     throw new Exception\Argument("Invalid type");
+                    break;
                     }
-
             }
         }
     }
