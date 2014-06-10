@@ -5,7 +5,7 @@ namespace Framework
     use Framework\Base as Base;
     use Framework\View as View;
     use Framework\Registry as Registry;
-    use Framework\Template as Template;
+    //use Framework\Template as Template;
     use Framework\Controller\Exception as Exception;
 
     class Controller extends Base
