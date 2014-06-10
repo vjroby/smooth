@@ -136,6 +136,10 @@ namespace Framework\Database\Connector
 
         }
 
+        /**
+         * @param $statement
+         * @param array $params
+         */
         public function bind_params($statement,$params = array()){
             $count = 'A';
             $param_name = 'param';

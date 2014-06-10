@@ -16,6 +16,9 @@ namespace Framework
             ""
         );
 
+        /**
+         * @throws Core\Exception
+         */
         public static function initialize()
         {
             if (!defined("APP_PATH"))
