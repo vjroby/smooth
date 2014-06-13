@@ -41,14 +41,61 @@ namespace Framework
             {
                 return "";
             }
-
-            return $this
-                ->template
-                ->parse(file_get_contents($this->file))
-                ->process($this->data);
+//TODO integrate data in view
+//            return $this
+//                ->template
+//                ->parse(file_get_contents($this->file))
+//                ->process($this->data);
+            return file_get_contents($this->file);
         }
 
+        protected function _set($key, $value)
+        {
+            if (!is_string($key) && !is_numeric($key))
+            {
+                throw new Exception\Data("Key must be a string or a number");
+            }
 
+            $data = $this->data;
+
+            if (!$data)
+            {
+                $data = array();
+            }
+
+            $data[$key] = $value;
+            $this->data = $data;
+        }
+
+        public function get($key, $default = "")
+        {
+            if (isset($this->data[$key]))
+            {
+                return $this->data[$key];
+            }
+            return $default;
+        }
+
+        public function set($key, $value = null)
+        {
+            if (is_array($key))
+            {
+                foreach ($key as $_key => $value)
+                {
+                    $this->_set($_key, $value);
+                }
+                return $this;
+            }
+
+            $this->_set($key, $value);
+            return $this;
+        }
+
+        public function erase($key)
+        {
+            unset($this->data[$key]);
+            return $this;
+        }
     }
 }
  

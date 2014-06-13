@@ -41,4 +41,3 @@ unset($database);
 unset($cache);
 unset($session);
 unset($router);
-echo 'test public';

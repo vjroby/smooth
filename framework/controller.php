@@ -48,7 +48,7 @@ namespace Framework
         /**
          * @readwrite
          */
-        protected $_defaultExtension = "html";
+        protected $_defaultExtension = "php";
 
         /**
          * @readwrite
@@ -84,7 +84,8 @@ namespace Framework
                 if ($doLayout)
                 {
                     $view = $this->getLayoutView();
-                    $view->set("template", $results);
+                    // TODO eliminate template
+                    $view->set("data", $results);
                     $results = $view->render();
 
                     header("Content-type: {$defaultContentType}");
