@@ -23,6 +23,11 @@ namespace Framework
          */
         protected $_template;
 
+        /**
+         * @readwrite
+         */
+        protected $_content;
+
         public function __construct($options = array())
         {
             parent::__construct($options);
@@ -35,18 +40,32 @@ namespace Framework
             return new Exception\Implementation("{$method} method not implemented");
         }
 
-        public function render()
+        public function render($output = false)
         {
             if (!file_exists($this->file))
             {
                 return "";
             }
-//TODO integrate data in view
-//            return $this
-//                ->template
-//                ->parse(file_get_contents($this->file))
-//                ->process($this->data);
-            return file_get_contents($this->file);
+            //TODO integrate data in view
+            //            return $this
+            //                ->template
+            //                ->parse(file_get_contents($this->file))
+            //                ->process($this->data);
+            $content = $this->content;
+            require ($this->file);
+        }
+
+        public function renderAction(){
+            if (!file_exists($this->file))
+            {
+                return "";
+            }
+            $data = $this->data;
+            ob_start();
+            include($this->file);
+            $this->content = ob_get_contents();
+            ob_end_clean();
+
         }
 
         protected function _set($key, $value)

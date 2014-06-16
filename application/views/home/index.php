@@ -1,1 +1,1 @@
-Hello world!
+<?php echo 'Data in index: ' ; var_dump($data); ?>

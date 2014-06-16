@@ -78,13 +78,14 @@ namespace Framework
                 if ($doAction)
                 {
                     $view = $this->getActionView();
-                    $results = $view->render();
+                    $view->set("data", $results);
+                    $results = $view->renderAction();
                 }
 
                 if ($doLayout)
                 {
                     $view = $this->getLayoutView();
-                    // TODO eliminate template
+                    // TODO action view content in template
                     $view->set("data", $results);
                     $results = $view->render();
 
