@@ -26,6 +26,11 @@ namespace Framework
         /**
          * @readwrite
          */
+        protected $_actionFile;
+
+        /**
+         * @readwrite
+         */
         protected $_content;
 
         public function __construct($options = array())

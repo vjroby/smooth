@@ -75,16 +75,17 @@ namespace Framework
 
             try
             {
+                $view = $this->getLayoutView();
                 if ($doAction)
                 {
-                    $view = $this->getActionView();
+
                     $view->set("data", $results);
                     $results = $view->renderAction();
                 }
 
                 if ($doLayout)
                 {
-                    $view = $this->getLayoutView();
+
                     // TODO action view content in template
                     $view->set("data", $results);
                     $results = $view->render();
@@ -136,7 +137,8 @@ namespace Framework
                 $action = $router->getAction();
 
                 $view = new View(array(
-                    "file" => APP_PATH."/{$defaultPath}/{$controller}/{$action}.{$defaultExtension}"
+                    "file" => APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}",
+                    "actionFile" => APP_PATH."/{$defaultPath}/{$controller}/{$action}.{$defaultExtension}"
                 ));
 
                 $this->setActionView($view);
