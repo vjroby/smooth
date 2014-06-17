@@ -4,6 +4,6 @@
     <title>Smooth</title>
 </head>
 <body>
-<?php echo 'Content: ' ;var_dump($content); ?>
+<?php echo $content; ?>
 </body>
 </html>

@@ -90,13 +90,13 @@ namespace Framework
                     $view->set("data", $results);
                     $results = $view->render();
 
-                    header("Content-type: {$defaultContentType}");
-                    echo $results;
+//                    header("Content-type: {$defaultContentType}");
+                    //echo $results;
                 }
                 else if ($doAction)
                 {
-                    header("Content-type: {$defaultContentType}");
-                    echo $results;
+//                    header("Content-type: {$defaultContentType}");
+//                    echo $results;
 
                     $this->setWillRenderLayoutView(false);
                     $this->setWillRenderActionView(false);
@@ -104,7 +104,7 @@ namespace Framework
             }
             catch (\Exception $e)
             {
-                throw new View\Exception\Renderer("Invalid layout/template syntax");
+                throw new View\Exception\Renderer("Invalid layout/template syntax.".$e->getMessage());
             }
         }
 
@@ -117,32 +117,32 @@ namespace Framework
         {
             parent::__construct($options);
 
+            $options_view = array();
+
             if ($this->getWillRenderLayoutView())
             {
                 $defaultPath = $this->getDefaultPath();
                 $defaultLayout = $this->getDefaultLayout();
                 $defaultExtension = $this->getDefaultExtension();
+                $options_view["file"]= APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}";
 
-                $view = new View(array(
-                    "file" => APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}"
-                ));
 
-                $this->setLayoutView($view);
+                //$this->setLayoutView($view);
             }
 
-            if ($this->getWillRenderLayoutView())
+            if ($this->getWillRenderActionView())
             {
                 $router = Registry::get("router");
                 $controller = $router->getController();
                 $action = $router->getAction();
 
-                $view = new View(array(
-                    "file" => APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}",
-                    "actionFile" => APP_PATH."/{$defaultPath}/{$controller}/{$action}.{$defaultExtension}"
-                ));
+                $options_view["actionFile"] = APP_PATH."/{$defaultPath}/{$controller}/{$action}.{$defaultExtension}";
 
-                $this->setActionView($view);
+               // $this->setActionView($view);
             }
+            $view = new View($options_view);
+            $this->setLayoutView($view);
+            $this->setActionView($view);
         }
     }
 }

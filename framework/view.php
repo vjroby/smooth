@@ -61,13 +61,13 @@ namespace Framework
         }
 
         public function renderAction(){
-            if (!file_exists($this->file))
+            if (!file_exists($this->actionFile))
             {
-                return "";
+                throw new Exception\Renderer('No view file for this action: '. basename($this->actionFile, ".php"));
             }
             $data = $this->data;
             ob_start();
-            include($this->file);
+            include($this->actionFile);
             $this->content = ob_get_contents();
             ob_end_clean();
 
