@@ -49,13 +49,9 @@ namespace Framework
         {
             if (!file_exists($this->file))
             {
-                return "";
+                throw new Exception\Renderer('No view file : '. basename($this->file, ".php"));
             }
-            //TODO integrate data in view
-            //            return $this
-            //                ->template
-            //                ->parse(file_get_contents($this->file))
-            //                ->process($this->data);
+
             $content = $this->content;
             require ($this->file);
         }
