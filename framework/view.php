@@ -62,6 +62,10 @@ namespace Framework
                 throw new Exception\Renderer('No view file for this action: '. basename($this->actionFile, ".php"));
             }
             $data = $this->data;
+            foreach ($data as $variable_name =>  $value) {
+                $$variable_name = $value;
+            }
+
             ob_start();
             include($this->actionFile);
             $this->content = ob_get_contents();

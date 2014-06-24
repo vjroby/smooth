@@ -41,7 +41,7 @@ namespace Framework
                 }
             }
 
-            // start autoloading
+            // start auto loading
 
             $paths = array_map(function($item) {
                 return APP_PATH.$item;

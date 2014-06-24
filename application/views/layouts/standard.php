@@ -18,7 +18,7 @@
         <![endif]-->
     </head>
     <body>
-    <div class="big-container">
+    <div class="big-container container">
         <header>
 
         </header>
@@ -30,11 +30,11 @@
             </ul>
 
         </div>
-        <div class="row">
+
             <section>
             <?php echo $content; ?>
             </section>
-        </div>
+
     </div>
 
     </body>
