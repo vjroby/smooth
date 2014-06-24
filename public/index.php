@@ -34,10 +34,14 @@ Framework\Registry::set("router", $router);
 
 // 8. dispatch the current request
 $router->dispatch();
+// 9. load the HttpRequest Class
+$httpRequest = new \Framework\HttpRequest();
+Framework\Registry::set('httpRequest', $httpRequest);
 
-// 9. unset global variables
+// 10. unset global variables
 unset($configuration);
 unset($database);
 unset($cache);
 unset($session);
 unset($router);
+unset($httpRequest);
