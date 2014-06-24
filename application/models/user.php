@@ -34,5 +34,25 @@ class User extends \Shared\Model{
      * @index
      */
     protected $_password;
+
+    /**
+     * @column
+     * @readwrite
+     * @type text
+     * @length 100
+     * @index
+     */
+    protected $_notes;
+
+    /**
+     * @column
+     * @readwrite
+     * @type integer
+     * @length 4
+     * @index
+     */
+    protected $_live;
+
+
 }
  

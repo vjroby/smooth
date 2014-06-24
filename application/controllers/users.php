@@ -92,10 +92,13 @@ class Users extends Controller{
                 if (!empty($user))
                 {
                     $session = Registry::get("session");
-                    $session->set("user", serialize($user));
+                    $session->set("user", $user);
 
-                    header("Location: /users/profile");
-                    exit();
+                    //TODO create a redirect method in controller
+                    $location_string = 'http://localhost'.\Framework\Smooth::baseUrl().'/users/profile';
+
+                    header("Location: ".$location_string);
+//                    exit();
                 }
                 else
                 {

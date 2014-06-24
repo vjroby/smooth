@@ -25,6 +25,10 @@ Framework\Registry::set("cache", $cache->initialize());
 $session = new Framework\Session();
 Framework\Registry::set("session", $session->initialize());
 
+// 9. load the HttpRequest Class
+$httpRequest = new \Framework\HttpRequest();
+Framework\Registry::set('httpRequest', $httpRequest);
+
 // 7. load the Router class and provide the url + extension
 $router = new Framework\Router(array(
     "url" => isset($_GET["url"]) ? $_GET["url"] : "home/index",
@@ -32,12 +36,11 @@ $router = new Framework\Router(array(
 ));
 Framework\Registry::set("router", $router);
 
+
+
+
 // 8. dispatch the current request
 $router->dispatch();
-// 9. load the HttpRequest Class
-$httpRequest = new \Framework\HttpRequest();
-Framework\Registry::set('httpRequest', $httpRequest);
-
 // 10. unset global variables
 unset($configuration);
 unset($database);

@@ -41,7 +41,7 @@ namespace Framework
         public function getBaseUrl($absolute=false)
         {
             if($this->_baseUrl===null)
-                $this->_baseUrl=rtrim(dirname($this->getScriptUrl()),'\\/');
+                $this->_baseUrl=rtrim(dirname($this->getScriptUrl()),'\\public/');
             return $absolute ? $this->getHostInfo() . $this->_baseUrl : $this->_baseUrl;
         }
     }

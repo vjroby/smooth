@@ -81,8 +81,8 @@ namespace Framework
             throw new Exception("{$class} not found");
         }
 
-        public static function  baseUrl(){
-             echo   Registry::get('httpRequest')->getBaseUrl();
+        public static function  baseUrl($absolute=false){
+             return Registry::get('httpRequest')->getBaseUrl($absolute);
         }
     }
 }
