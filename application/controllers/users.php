@@ -91,14 +91,15 @@ class Users extends Controller{
 
                 if (!empty($user))
                 {
+
                     $session = Registry::get("session");
                     $session->set("user", $user);
 
                     //TODO create a redirect method in controller
                     $location_string = 'http://localhost'.\Framework\Smooth::baseUrl().'/users/profile';
 
-                    header("Location: ".$location_string);
-//                    exit();
+                    header("Location: ".$location_string,true,303);
+                    die();
                 }
                 else
                 {
@@ -111,7 +112,7 @@ class Users extends Controller{
     public function profile()
     {
         $session = Registry::get("session");
-        $user = unserialize($session->get("user", null));
+        $user = $session->get("user", null);
 
         if (empty($user))
         {

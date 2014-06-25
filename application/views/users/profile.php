@@ -2,5 +2,5 @@
     <div class="col-md-4 col-md-offset-3">
         <h1>Success!</h1>
     </div>
-    <?php var_dump($user); ?>
+    <?php echo $user['first'].' '.$user['last']; ?>
 </div>

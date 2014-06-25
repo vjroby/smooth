@@ -319,9 +319,10 @@ namespace Framework
 
             if ($first)
             {
-                return new $class(
-                    $query->first()
-                );
+                return $first;
+//                return new $class(
+//                    $query->first()
+//                );
             }
 
             return null;
