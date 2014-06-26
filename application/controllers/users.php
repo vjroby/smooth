@@ -8,56 +8,65 @@ class Users extends Controller{
 
     public function register(){
 
+        $error = false;
+
         if (RequestMethods::post('register')){
 
             $first = RequestMethods::post('first');
             $last = RequestMethods::post('last');
             $email = RequestMethods::post('email');
             $password = RequestMethods::post('password');
+
+            $view = $this->getActionView();
+
+            if (empty($first))
+            {
+                $view->set("first_error", "First name not provided");
+                $error = true;
+            }
+
+            if (empty($last))
+            {
+                $view->set("last_error", "Last name not provided");
+                $error = true;
+            }
+
+            if (empty($email))
+            {
+                $view->set("email_error", "Email not provided");
+                $error = true;
+            }
+
+            if (empty($password))
+            {
+                $view->set("password_error", "Password not provided");
+                $error = true;
+            }
+
+            if (!$error)
+            {
+                $user = new User(array(
+                    "first" => $first,
+                    "last" => $last,
+                    "email" => $email,
+                    "password" => $password
+                ));
+
+                $user->save();
+                $view->set("success", true);
+            }
         }
 
-        $view = $this->getActionView();
-        $error = false;
 
-        if (empty($first))
-        {
-            $view->set("first_error", "First name not provided");
-            $error = true;
-        }
 
-        if (empty($last))
-        {
-            $view->set("last_error", "Last name not provided");
-            $error = true;
-        }
 
-        if (empty($email))
-        {
-            $view->set("email_error", "Email not provided");
-            $error = true;
-        }
 
-        if (empty($password))
-        {
-            $view->set("password_error", "Password not provided");
-            $error = true;
-        }
-
-        if (!$error)
-        {
-            $user = new User(array(
-                "first" => $first,
-                "last" => $last,
-                "email" => $email,
-                "password" => $password
-            ));
-
-            $user->save();
-            $view->set("success", true);
-        }
 
     }
 
+    /**
+     *
+     */
     public function login()
     {
         if (RequestMethods::post("login"))
@@ -94,11 +103,7 @@ class Users extends Controller{
 
                     $session = Registry::get("session");
                     $session->set("user", $user);
-
-                    //TODO create a redirect method in controller
-                    $location_string = 'http://localhost'.\Framework\Smooth::baseUrl().'/users/profile';
-
-                    $this->redirect($location_string);
+                    $this->redirect('/users/profile');
                 }
                 else
                 {
@@ -108,6 +113,9 @@ class Users extends Controller{
         }
     }
 
+    /**
+     * view profile of a user
+     */
     public function profile()
     {
         $session = Registry::get("session");
@@ -121,6 +129,11 @@ class Users extends Controller{
         }
 
         $this->getActionView()->set("user", $user);
+    }
+
+    public function sync(){
+        //$user = new User();
+        //$this->connector->sync($user);
     }
 
 }

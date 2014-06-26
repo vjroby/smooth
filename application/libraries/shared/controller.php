@@ -6,12 +6,17 @@ namespace Shared
 
     class Controller extends \Framework\Controller{
 
+        /**
+         * @readwrite
+         */
+        protected $_connector;
+
         public function __construct($options = array()){
 
             parent::__construct($options);
 
             $database = Registry::get('database');
-            $database->connect();
+            $this->connector = $database->connect();
         }
     }
 }

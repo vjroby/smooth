@@ -145,12 +145,33 @@ namespace Framework
             $this->setActionView($view);
         }
 
+        /**
+         * Creates a redirect location string
+         * If $url is an array it presumes that is a controller / action / param
+         * so, it will be imploded
+         *
+         * @param $url
+         * @param null $statusCode
+         * @param bool $exit
+         * @throws Controller\Exception
+         */
         public function redirect($url, $statusCode = null, $exit = true){
             if ( is_null($url)){
                 throw new Exception('URL not provided.');
             }
+            $host =  Registry::get('httpRequest')->getBaseUrl(true);
 
-            header('Location:'.$url);
+            if (is_array($url)){
+                $url = implode('/', $url);
+            }
+            $stringLocation = $host.$url;
+
+
+            if(!is_null($statusCode)){
+                $url .=','.$statusCode;
+            }
+
+            header('Location:'.$stringLocation);
 
             if ($exit === true){
                 exit();
