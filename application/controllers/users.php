@@ -98,8 +98,7 @@ class Users extends Controller{
                     //TODO create a redirect method in controller
                     $location_string = 'http://localhost'.\Framework\Smooth::baseUrl().'/users/profile';
 
-                    header("Location: ".$location_string,true,303);
-                    die();
+                    $this->redirect($location_string);
                 }
                 else
                 {

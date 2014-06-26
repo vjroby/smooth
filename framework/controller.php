@@ -144,5 +144,17 @@ namespace Framework
             $this->setLayoutView($view);
             $this->setActionView($view);
         }
+
+        public function redirect($url, $statusCode = null, $exit = true){
+            if ( is_null($url)){
+                throw new Exception('URL not provided.');
+            }
+
+            header('Location:'.$url);
+
+            if ($exit === true){
+                exit();
+            }
+        }
     }
 }
