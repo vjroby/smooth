@@ -100,7 +100,6 @@ class Users extends Controller{
 
                 if (!empty($user))
                 {
-
                     $session = Registry::get("session");
                     $session->set("user", $user);
                     $this->redirect('/users/profile');

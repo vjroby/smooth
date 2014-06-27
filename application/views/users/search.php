@@ -11,7 +11,7 @@ $pages = array(1);
             <div class="form-group">
                 <?php echo \Framework\Html::select(array(
                     "data" => array(
-                            "created" => "created /></div",
+                            "created" => "created",
                             "modified" => "modified",
                             "first" => "first",
                             "last" => "last",
@@ -32,8 +32,8 @@ $pages = array(1);
                         "desc"  => "Descending"
                     ),
                     "class" => "form-control",
-                    "id" => "query",
-                    "name" => "query",
+                    "id" => "direction",
+                    "name" => "direction",
                     "label" => array(
                         "title" => "Direction",
                         "class" => "sr-only"
@@ -60,6 +60,23 @@ $pages = array(1);
             </div>
 
         </form>
+    </div>
+    <div class="col-md-12 clearfix" style="margin-bottom: 10px;">
+
+    </div>
+    <div class="col-md-12">
+       <?php if ($users != false): ?>
+           <table class="table">
+               <tr>
+                   <td>Name</td>
+               </tr>
+               <?php foreach($users as $u): ?>
+               <tr>
+                   <td><?php echo $u->first.' '.$u->last; ?></td>
+               </tr>
+               <?php endforeach; ?>
+           </table>
+       <?php endif; ?>
     </div>
 </div>
 
