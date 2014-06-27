@@ -2,7 +2,7 @@ Smooth MVC Framework
 ====================
 
 ###This is a basic Model-View-Controller framework developed by me from my experience with Codeigniter, CakePHP and Yii.
-You can find more about me [Here](www.robertgabriel.ro)
+You can find more about me [Here](http://robertgabriel.ro)
 
 * ver. 0.2
     * Html Class for creating form elements, input and select for now
