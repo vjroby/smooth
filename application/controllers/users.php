@@ -136,5 +136,22 @@ class Users extends Controller{
         //$this->connector->sync($user);
     }
 
+    public function index(){
+        $session = Registry::get("session");
+        $user = $session->get("user", null);
+        if (empty($user)){
+            $this->redirect('/users/register');
+        }else{
+            $this->redirect('/users/profile');
+        }
+    }
+
+    public function logout(){
+        $session = Registry::get("session");
+        $session->erase("user", null);
+
+        $this->redirect('/users');
+    }
+
 }
  

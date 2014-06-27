@@ -26,9 +26,15 @@
                 <div class="container">
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/login">Login</a></li>
-                            <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/register">Register</a></li>
-                            <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/logout">Logout</a></li>
+                            <?php if (isset($user)): ?>
+                                <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/logout">Logout</a></li>
+                                <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/profile">Profile</a></li>
+                            <?php endif; ?>
+                            <?php if (!isset($user)): ?>
+                                <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/login">Login</a></li>
+                                <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/register">Register</a></li>
+                            <?php endif; ?>
+
                         </ul>
                     </div>
                 </div>
