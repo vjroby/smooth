@@ -127,6 +127,17 @@ namespace Framework
             unset($this->data[$key]);
             return $this;
         }
+
+        public function element($element){
+            $file = APP_PATH.DIRECTORY_SEPARATOR.'application'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'elements';
+            $file .=DIRECTORY_SEPARATOR.$element;
+
+            if (file_exists($file)){
+                require ($file);
+            }else{
+                throw new Exception("Element file doesn't exists");
+            }
+        }
     }
 }
  

@@ -7,6 +7,6 @@
     echo $user['first'].' '.$user['last'];
 
 
-    var_dump($user);
+    $this->element('navigation');
     ?>
 </div>
