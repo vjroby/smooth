@@ -29,6 +29,7 @@
                             <?php if (isset($user)): ?>
                                 <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/logout">Logout</a></li>
                                 <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/profile">Profile</a></li>
+                                <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/search">Search</a></li>
                             <?php endif; ?>
                             <?php if (!isset($user)): ?>
                                 <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/login">Login</a></li>

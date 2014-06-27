@@ -196,6 +196,10 @@ namespace Framework\Utility
             return $result;
         }
 
+        /**
+         * @param $className
+         * @return mixed
+         */
         public static function classNameWithoutNamespace($className){
 
             if (preg_match('@\\\\([\w]+)$@', $className, $matches)) {
@@ -203,6 +207,11 @@ namespace Framework\Utility
             }
 
             return $className;
+        }
+
+        public static function prepareForHtml($string){
+
+            return filter_var($string,FILTER_SANITIZE_STRING,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         }
     }
 }

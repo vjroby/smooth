@@ -85,5 +85,30 @@ namespace Framework\Utility
             $keys = array_keys($array);
             return $array[$keys[sizeof($keys) - 1]];
         }
+
+        /**
+         *
+         * prepares the values for echo in html
+         *
+         * @param $array
+         * @return null
+         */
+        public static function prepareForHtml($array){
+            if (sizeof($array) == 0){
+                return null;
+            }
+            foreach ($array as $k => $v) {
+                if(is_array($v)){
+                    self::prepareForHtml($v);
+                }else{
+                    $array[$k] = StringMethods::prepareForHtml($v);
+                }
+            }
+
+            return $array;
+
+        }
     }
+
+
 }

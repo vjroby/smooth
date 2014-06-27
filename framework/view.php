@@ -51,11 +51,13 @@ namespace Framework
             {
                 throw new Exception\Renderer('No view file : '. basename($this->file, ".php"));
             }
+
             $data = $this->data;
             foreach ($data as $variable_name =>  $value) {
                 $$variable_name = $value;
             }
 
+            $data = $this->data;
             $content = $this->content;
             require ($this->file);
         }
