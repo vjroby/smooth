@@ -173,6 +173,9 @@ namespace Framework
 
             header('Location:'.$stringLocation);
 
+            $this->willRenderLayoutView = false;
+            $this->willRenderActionView = false;
+
             if ($exit === true){
                 exit();
             }

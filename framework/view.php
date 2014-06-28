@@ -128,9 +128,17 @@ namespace Framework
             return $this;
         }
 
-        public function element($element){
+        public function element($element, array $data = array()){
             $file = APP_PATH.DIRECTORY_SEPARATOR.'application'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'elements';
             $file .=DIRECTORY_SEPARATOR.$element.'.php';
+
+            if (count($data) != 0 ){
+                foreach ($data as $variable_name =>  $value) {
+                    $$variable_name = $value;
+                }
+
+            }
+
 
             if (file_exists($file)){
                 require ($file);
