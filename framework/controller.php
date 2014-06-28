@@ -168,7 +168,7 @@ namespace Framework
 
 
             if(!is_null($statusCode)){
-                $url .=','.$statusCode;
+                $stringLocation .=','.$statusCode;
             }
 
             header('Location:'.$stringLocation);
