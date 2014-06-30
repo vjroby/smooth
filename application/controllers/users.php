@@ -110,7 +110,7 @@ class Users extends Controller{
 
     public function logout(){
         $session = Registry::get("session");
-        $session->erase("user", null);
+        $session->erase("user");
 
         $this->redirect('/users');
     }
