@@ -166,13 +166,23 @@ class Users extends Controller{
                 "first" => RequestMethods::post("first", $user['first']),
                 "last" => RequestMethods::post("last", $user['last']),
                 "email" => RequestMethods::post("email", $user['email']),
-                "password" => RequestMethods::post("password", $user['password'])
+                "password" => RequestMethods::post("password", $user['password']),
             ));
 
             if ($user_update->validate())
             {
                 $user_update->save();
+
+                $user = User::first(array(
+                    "id = ?" => $user['id'],
+                ));
+                $session = Registry::get("session");
+                $session->set("user", $user);
                 $view->set("success", true);
+                $this->redirect('/users/settings');
+
+
+
             }
 
             $view->set("errors", $user_update->getErrors());

@@ -51,7 +51,7 @@ class User extends \Shared\Model{
      * @length 4
      * @index
      */
-    protected $_live;
+//    protected $_live;
 
 
 }

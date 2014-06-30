@@ -18,7 +18,7 @@ namespace Shared
          * @type boolean
          * @index
          */
-        protected $_live;
+//        protected $_live;
 
         /**
          * @column
@@ -26,14 +26,14 @@ namespace Shared
          * @type boolean
          * @index
          */
-        protected $_deleted;
+//        protected $_deleted = 0;
 
         /**
          * @column
          * @readwrite
          * @type datetime
          */
-        protected $_created;
+//        protected $_created;
 
         /**
          * @column
