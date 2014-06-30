@@ -161,20 +161,21 @@ class Users extends Controller{
 
         if (RequestMethods::post("update"))
         {
-            $user = new User(array(
-                "first" => RequestMethods::post("first", $user->first),
-                "last" => RequestMethods::post("last", $user->last),
-                "email" => RequestMethods::post("email", $user->email),
-                "password" => RequestMethods::post("password", $user->password)
+            $user_update = new User(array(
+                "id" => $user['id'],
+                "first" => RequestMethods::post("first", $user['first']),
+                "last" => RequestMethods::post("last", $user['last']),
+                "email" => RequestMethods::post("email", $user['email']),
+                "password" => RequestMethods::post("password", $user['password'])
             ));
 
-            if ($user->validate())
+            if ($user_update->validate())
             {
-                $user->save();
+                $user_update->save();
                 $view->set("success", true);
             }
 
-            $view->set("errors", $user->getErrors());
+            $view->set("errors", $user_update->getErrors());
         }
     }
 

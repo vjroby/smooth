@@ -5,7 +5,7 @@
 
     <?php
         var_dump($user);
-    echo $user->first;
+    echo $user['first'];
     //echo $user->first.' '.$user->last;
 
     ?>
