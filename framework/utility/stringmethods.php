@@ -98,7 +98,7 @@ namespace Framework\Utility
             return $unique;
         }
 
-        public function indexOf($string, $substring, $offset = null)
+        public static  function indexOf($string, $substring, $offset = null)
         {
             $position = strpos($string, $substring, $offset);
             if (!is_int($position))
