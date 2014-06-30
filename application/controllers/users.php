@@ -177,11 +177,10 @@ class Users extends Controller{
                     "id = ?" => $user['id'],
                 ));
                 $session = Registry::get("session");
+                $this->setUser($user);
                 $session->set("user", $user);
+                $view->set("user", $user);
                 $view->set("success", true);
-                $this->redirect('/users/settings');
-
-
 
             }
 
