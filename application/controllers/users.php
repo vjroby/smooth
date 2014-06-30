@@ -157,5 +157,10 @@ class Users extends Controller{
             ->set("users", $users);
     }
 
+    public function settings(){
+        $user = $this->user;
+        $this->getActionView()->set("user", $user);
+    }
+
 }
  

@@ -85,7 +85,6 @@ namespace Framework
             $readonly = (isset($options['readonly']) && is_bool($options['readonly']))
                 ? $options['readonly'] : false;
 
-            $return = '';
 
             $return = self::createLabelForInput($options);
 
@@ -106,9 +105,18 @@ namespace Framework
             }
 
             $return.= ' />';
+
+            $return = self::apply_wrapper($options, $return);
+
             return $return;
         }
 
+        /**
+         * Creates label for form element
+         *
+         * @param $options
+         * @return string
+         */
         public static function createLabelForInput($options){
             $return = '';
             if (!is_null($label = self::checkOptionReturnNull($options, 'label'))){
@@ -123,6 +131,15 @@ namespace Framework
             return  $return;
         }
 
+        /**
+         *
+         * Checks if an key exists in $options array and if is null returns it,
+         * otherwise returns an empty string
+         *
+         * @param array $options
+         * @param $key
+         * @return string
+         */
         protected static function  checkOption(array $options, $key){
             if (isset($options[$key]) && !is_null($key) && !empty($key)){
                 return $options[$key];
@@ -130,11 +147,55 @@ namespace Framework
                 return '';
             }
         }
+        /**
+         *
+         * Checks if an key exists in $options array and if is null returns it,
+         * otherwise returns an null
+         *
+         * @param array $options
+         * @param $key
+         * @return string
+         */
         protected static function  checkOptionReturnNull(array $options, $key){
             if (isset($options[$key]) && !is_null($key) && !empty($key)){
                 return $options[$key];
             }else{
                 return null;
+            }
+        }
+
+        /**
+         * creates a wrapper to put the element in
+         *
+         * @param array $options
+         * @param $string - is the string form element
+         * @return string
+         */
+        protected static function apply_wrapper(array $options, $string){
+
+            $wrapper_tag = 'div';
+            $wrapper_class = '';
+            $wrapper_id = '';
+
+            if(isset($options['wrapper']) && is_array($options['wrapper'])){
+                $wrapper_tag = isset($options['wrapper']['type']) ? $options['wrapper']['type']
+                    : $wrapper_tag;
+
+                $wrapper_class = isset($options['wrapper']['class']) ? $options['wrapper']['class']
+                    : $wrapper_class;
+
+                $wrapper_id = isset($options['wrapper']['id']) ? $options['wrapper']['id']
+                    : $wrapper_id;
+
+
+            }elseif(isset($options['wrapper']) && $options['wrapper'] === false){
+                $wrapper_tag = false;
+            }
+
+            if($wrapper_tag !== false){
+                return "<{$wrapper_tag} class=\"{$wrapper_class}\" id=\"{$wrapper_id}\">".$string."</{$wrapper_tag}>";
+            }else{
+                return $string;
             }
         }
     }

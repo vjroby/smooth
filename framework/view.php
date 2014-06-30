@@ -143,7 +143,7 @@ namespace Framework
             if (file_exists($file)){
                 require ($file);
             }else{
-                throw new Exception("Element file doesn't exists{$file}");
+                throw new Exception("Element file doesn't exists {$file}");
             }
         }
     }
