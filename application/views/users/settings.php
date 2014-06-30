@@ -8,8 +8,9 @@
         </div>
     <?php endif; ?>
     <div class="col-md-6 col-md-offset-3">
-        <form action="POST" role="form">
-                <?php  echo \Framework\Html::input(array(
+        <form action="" method="POST" role="form">
+                <?php
+                echo \Framework\Html::input(array(
                     'type' => 'text' , 'name' => 'first', 'value' => $user['first'],
                     'class' => 'form-control',
                     'label' => array(
@@ -18,7 +19,46 @@
                     'wrapper' => array(
                         'class' => 'form-group'
                     ),
-                ));?>
+                ));
+                echo \Framework\Html::input(array(
+                    'type' => 'text' , 'name' => 'last', 'value' => $user['last'],
+                    'class' => 'form-control',
+                    'label' => array(
+                        'title' =>'Last name:'
+                    ),
+                    'wrapper' => array(
+                        'class' => 'form-group'
+                    ),
+                ));
+                echo \Framework\Html::input(array(
+                    'type' => 'text' , 'name' => 'email', 'value' => $user['email'],
+                    'class' => 'form-control',
+                    'label' => array(
+                        'title' =>'Email:'
+                    ),
+                    'wrapper' => array(
+                        'class' => 'form-group'
+                    ),
+                ));
+                echo \Framework\Html::input(array(
+                    'type' => 'password' , 'name' => 'password', 'value' => $user['password'],
+                    'class' => 'form-control',
+                    'label' => array(
+                        'title' =>'Password:'
+                    ),
+                    'wrapper' => array(
+                        'class' => 'form-group'
+                    ),
+                ));
+                echo \Framework\Html::input(array(
+                    'type' => 'submit' , 'name' => 'update', 'value' => 'update',
+                    'class' => 'btn btn-primary',
+                    'wrapper' => array(
+                        'class' => 'form-group'
+                    ),
+                ));
+
+                ?>
         </form>
     </div>
 </div>

@@ -83,17 +83,14 @@ class Users extends Controller{
      */
     public function profile()
     {
-
         $user = $this->user;
 
         if (empty($user))
         {
-            $user = new StdClass();
-            $user->first = "Mr.";
-            $user->last = "Smith";
+            $this->redirect('/users/login');
         }
-
-        $this->getActionView()->set("user", $user);
+        $view = $this->getActionView();
+        $view->set("user", $user);
     }
 
     public function sync(){
@@ -157,9 +154,28 @@ class Users extends Controller{
             ->set("users", $users);
     }
 
-    public function settings(){
-        $user = $this->user;
-        $this->getActionView()->set("user", $user);
+    public function settings()
+    {
+        $view = $this->getActionView();
+        $user = $this->getUser();
+
+        if (RequestMethods::post("update"))
+        {
+            $user = new User(array(
+                "first" => RequestMethods::post("first", $user->first),
+                "last" => RequestMethods::post("last", $user->last),
+                "email" => RequestMethods::post("email", $user->email),
+                "password" => RequestMethods::post("password", $user->password)
+            ));
+
+            if ($user->validate())
+            {
+                $user->save();
+                $view->set("success", true);
+            }
+
+            $view->set("errors", $user->getErrors());
+        }
     }
 
 }

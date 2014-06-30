@@ -8,7 +8,7 @@ namespace Framework
     use Framework\Utility\StringMethods as StringMethods;
     use Framework\Model\Exception as Exception;
 
-    class Model extends Base
+    class Model extends Base implements \Serializable
     {
         /**
          * @readwrite
@@ -81,6 +81,44 @@ namespace Framework
             parent::__construct($options);
             $this->load();
         }
+
+        /**
+         * (PHP 5 &gt;= 5.1.0)<br/>
+         * String representation of object
+         * @link http://php.net/manual/en/serializable.serialize.php
+         * @return string the string representation of the object or null
+         */
+        public function serialize()
+        {
+            // TODO: Implement serialize() method.
+        }
+
+        /**
+         * (PHP 5 &gt;= 5.1.0)<br/>
+         * Constructs the object
+         * @link http://php.net/manual/en/serializable.unserialize.php
+         * @param string $serialized <p>
+         * The string representation of the object.
+         * </p>
+         * @return void
+         */
+        public function unserialize($serialized)
+        {
+            // TODO: Implement unserialize() method.
+        }
+
+//        public function __sleep(){
+//            $array = array('_table', '_errors','_columns','_primary','_types');
+//            $columns = $this->getColumns();
+//
+//                foreach ($this->columns as $key => $column){
+//                    if (!$column["read"]){
+//                        $array[] = $key;
+//                    }
+//                }
+//
+//            return $array;
+//        }
 
         public function load()
         {
@@ -355,10 +393,10 @@ namespace Framework
 
             if ($first)
             {
-                return $first;
-//                return new $class(
-//                    $query->first()
-//                );
+//                return $first;
+                return new $class(
+                    $query->first()
+                );
             }
 
             return null;
@@ -523,5 +561,6 @@ namespace Framework
 
             return !sizeof($this->errors);
         }
+
     }
 }

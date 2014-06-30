@@ -71,12 +71,18 @@ namespace Framework
             foreach ($data as $variable_name =>  $value) {
                 $$variable_name = $value;
             }
+            try {
+                ob_start();
+                include($this->actionFile);
+                $this->content = ob_get_contents();
+                ob_end_clean();
+
+            }catch(Exception $e){
+                throw new  Exception('Exception in view file');
+            }
 
 
-            ob_start();
-            include($this->actionFile);
-            $this->content = ob_get_contents();
-            ob_end_clean();
+
 
         }
 

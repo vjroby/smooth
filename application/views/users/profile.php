@@ -4,7 +4,9 @@
     </div>
 
     <?php
-    echo $user['first'].' '.$user['last'];
+        var_dump($user);
+    echo $user->first;
+    //echo $user->first.' '.$user->last;
 
     ?>
 </div>
