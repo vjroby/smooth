@@ -16,7 +16,7 @@
                 <?php foreach($replys as $reply): ?>
                 <div class="media">
                     <h6 class="media-heading">Reply (<?php echo $reply->userName; ?>):</h6>
-                    <?php echo $reply->body; ?></div>
+                    <?php echo $reply->body; ?>
                 </div>
                 <?php endforeach; ?>
             </div>
