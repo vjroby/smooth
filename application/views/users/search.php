@@ -69,10 +69,13 @@ $pages = array(1);
            <table class="table">
                <tr>
                    <td>Name</td>
+                   <td>Actions</td>
                </tr>
                <?php foreach($users as $u): ?>
                <tr>
                    <td><?php echo $u->first.' '.$u->last; ?></td>
+                   <td><a class="btn btn-primary" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/friend/<?php echo $u->id; ?>">friend</a></td>
+                   <td><a class="btn btn-danger" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/unfriend/<?php echo $u->id; ?>">unfriend</a></td>
                </tr>
                <?php endforeach; ?>
            </table>

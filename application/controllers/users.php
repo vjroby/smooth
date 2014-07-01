@@ -132,7 +132,7 @@ class Users extends Controller{
         if (RequestMethods::post("search"))
         {
             $where = array(
-                "SOUNDEX(first) = SOUNDEX(?)" => $query,
+                "first LIKE ?" => "%".$query."%",
                 "live = ?" => true,
                 "deleted = ?" => false
             );
@@ -200,7 +200,7 @@ class Users extends Controller{
         $user = $this->getUser();
 
         $friend = new Friend(array(
-            "user" => $user->id,
+            "user" => $user['id'],
             "friend" => $id
         ));
 
@@ -217,7 +217,7 @@ class Users extends Controller{
         $user = $this->getUser();
 
         $friend = Friend::first(array(
-            "user" => $user->id,
+            "user" => $user['id'],
             "friend" => $id
         ));
 

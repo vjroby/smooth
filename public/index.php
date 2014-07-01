@@ -38,6 +38,9 @@ try{
     ));
     Framework\Registry::set("router", $router);
 
+    // include custom routes
+    include(__DIR__.DIRECTORY_SEPARATOR."routes.php");
+
 
 
 
