@@ -224,7 +224,7 @@ class Users extends Controller{
         if ($friend)
         {
             $friend = new Friend(array(
-                "id" => $friend->id
+                "id" => $friend['id']
             ));
             $friend->delete();
         }

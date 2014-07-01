@@ -36,7 +36,7 @@ $routes = array(
     array(
         "pattern" => "unfriend/:id",
         "controller" => "users",
-        "action" => "friend"
+        "action" => "unfriend"
     ),
     array(
         "pattern" => "friend/:id",
