@@ -44,6 +44,10 @@ namespace Framework
          * @readwrite
          */
         protected $_defaultLayout = "layouts/standard";
+        /**
+         * @readwrite
+         */
+        protected $_defaultLayoutAjax = "layouts/ajax";
 
         /**
          * @readwrite
@@ -54,6 +58,11 @@ namespace Framework
          * @readwrite
          */
         protected $_defaultContentType = "text/html";
+
+        /**
+         * @readwrite
+         */
+        protected $_isAjaxNavigation = false;
 
         protected function _getExceptionForImplementation($method)
         {
@@ -75,10 +84,15 @@ namespace Framework
 
             try
             {
+                $isAjaxRequest = Registry::get('httpRequest')->getIsAjaxRequest();
+
+                if ($isAjaxRequest === true){
+                    $this->renderAjaxNavigation();
+                }
+
                 $view = $this->getLayoutView();
                 if ($doAction)
                 {
-
                     $view->set("data", $results);
                     $results = $view->renderAction();
                 }
@@ -89,14 +103,9 @@ namespace Framework
                     // TODO action view content in template
                     $view->set("data", $results);
                     $results = $view->render();
-
-//                    header("Content-type: {$defaultContentType}");
-                    //echo $results;
                 }
                 else if ($doAction)
                 {
-//                    header("Content-type: {$defaultContentType}");
-//                    echo $results;
 
                     $this->setWillRenderLayoutView(false);
                     $this->setWillRenderActionView(false);
@@ -127,7 +136,6 @@ namespace Framework
                 $options_view["file"]= APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}";
 
 
-                //$this->setLayoutView($view);
             }
 
             if ($this->getWillRenderActionView())
@@ -179,6 +187,20 @@ namespace Framework
             if ($exit === true){
                 exit();
             }
+        }
+
+        /**
+         * If there is an Ajax request the layout must pe changed
+         * to get only the info for ajax,
+         * it uses the layout ajax.php which doesn't have styles
+         */
+        public function renderAjaxNavigation(){
+
+            $view = $this->getLayoutView();
+            $defaultPath = $this->getDefaultPath();
+            $defaultLayout = $this->getDefaultLayoutAjax();
+            $defaultExtension = $this->getDefaultExtension();
+            $view->setFile(APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}");
         }
     }
 }

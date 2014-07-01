@@ -117,6 +117,7 @@ class Users extends Controller{
 
     public function search()
     {
+
         $view = $this->getActionView();
 
         $query = RequestMethods::post("query");
@@ -154,6 +155,9 @@ class Users extends Controller{
             ->set("users", $users);
     }
 
+    /**
+     *
+     */
     public function settings()
     {
         $view = $this->getActionView();
@@ -185,6 +189,58 @@ class Users extends Controller{
             }
 
             $view->set("errors", $user_update->getErrors());
+        }
+    }
+
+    /**
+     * @before _secure
+     */
+    public function friend($id)
+    {
+        $user = $this->getUser();
+
+        $friend = new Friend(array(
+            "user" => $user->id,
+            "friend" => $id
+        ));
+
+        $friend->save();
+
+        $this->redirect('/search');
+    }
+
+    /**
+     * @before _secure
+     */
+    public function unfriend($id)
+    {
+        $user = $this->getUser();
+
+        $friend = Friend::first(array(
+            "user" => $user->id,
+            "friend" => $id
+        ));
+
+        if ($friend)
+        {
+            $friend = new Friend(array(
+                "id" => $friend->id
+            ));
+            $friend->delete();
+        }
+
+        $this->redirect('/search');
+    }
+
+    /**
+     * @protected
+     */
+    public function _secure()
+    {
+        $user = $this->getUser();
+        if (!$user)
+        {
+            $this->redirect('/login');
         }
     }
 

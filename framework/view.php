@@ -81,9 +81,6 @@ namespace Framework
                 throw new  Exception('Exception in view file');
             }
 
-
-
-
         }
 
         protected function _set($key, $value)
@@ -144,7 +141,6 @@ namespace Framework
                 }
 
             }
-
 
             if (file_exists($file)){
                 require ($file);
