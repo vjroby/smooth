@@ -53,6 +53,31 @@ class User extends \Shared\Model{
      */
 //    protected $_live;
 
+    public function isFriend($id)
+    {
+        $userId = $this->getId();
+
+        $friend = Friend::first(array(
+            "user = ?" => $this->getId(),
+            "friend = ?" => $id
+        ));
+
+        if ($friend)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static function hasFriend($id, $friend)
+    {
+        $user = new self(array(
+            "id" => $id
+        ));
+
+        return $user->isFriend($friend);
+    }
+
 
 }
  

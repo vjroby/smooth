@@ -74,8 +74,12 @@ $pages = array(1);
                <?php foreach($users as $u): ?>
                <tr>
                    <td><?php echo $u->first.' '.$u->last; ?></td>
-                   <td><a class="btn btn-primary" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/friend/<?php echo $u->id; ?>">friend</a></td>
-                   <td><a class="btn btn-danger" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/unfriend/<?php echo $u->id; ?>">unfriend</a></td>
+                   <?php if (User::hasFriend($user['id'], $u->id)): ?>
+                       <td><a class="btn btn-danger" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/unfriend/<?php echo $u->id; ?>">unfriend</a></td>
+                   <?php endif; ?>
+                   <?php if (!User::hasFriend($user['id'], $u->id)): ?>
+                       <td><a class="btn btn-primary" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/friend/<?php echo $u->id; ?>">friend</a></td>
+                   <?php endif; ?>
                </tr>
                <?php endforeach; ?>
            </table>

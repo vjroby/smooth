@@ -4,6 +4,7 @@
             <ul class="nav navbar-nav">
                 <?php if (!is_null($user)): ?>
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/logout">Logout</a></li>
+                    <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/home">Home</a></li>
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/profile">Profile</a></li>
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/search">Search</a></li>
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/settings">Settings</a></li>

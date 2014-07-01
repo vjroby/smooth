@@ -119,6 +119,7 @@ class Users extends Controller{
     {
 
         $view = $this->getActionView();
+        $user = $this->getUser();
 
         $query = RequestMethods::post("query");
         $order = RequestMethods::post("order", "modified");
@@ -134,7 +135,8 @@ class Users extends Controller{
             $where = array(
                 "first LIKE ?" => "%".$query."%",
                 "live = ?" => true,
-                "deleted = ?" => false
+                "deleted = ?" => false,
+                "id <> ?" => $user['id'],
             );
 
             $fields = array(

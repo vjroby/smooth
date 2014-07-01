@@ -22,4 +22,18 @@
   PRIMARY KEY (`id`),
   KEY `live` (`live`),
   KEY `deleted` (`deleted`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE `message` (
+  `user` int(11) DEFAULT NULL,
+  `message` int(11) DEFAULT NULL,
+  `body` text DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `live` tinyint(4) DEFAULT NULL,
+  `deleted` tinyint(4) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `live` (`live`),
+  KEY `deleted` (`deleted`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

@@ -111,6 +111,42 @@ namespace Framework
             return $return;
         }
 
+        public static function textarea(array $options){
+            $options = ArrayMethods::prepareForHtml($options);
+            $disabled = (isset($options['disabled']) && is_bool($options['disabled']))
+                ? $options['disabled'] : false;
+
+            $readonly = (isset($options['readonly']) && is_bool($options['readonly']))
+                ? $options['readonly'] : false;
+
+
+            $return = self::createLabelForInput($options);
+
+            $return .= '<textarea ';
+            $return .= ' class="'.self::checkOption($options,'class').'" ';
+            $return .= ' name="'.self::checkOption($options,'name').'" ';
+            $return .= ' id="'.self::checkOption($options,'id').'" ';
+            $return .= ' type="'.self::checkOption($options,'type').'" ';
+
+            if ($disabled === true){
+                $return .= ' disabled ';
+            }
+
+            if ($readonly === true){
+                $return .= ' readonly ';
+            }
+
+            $return .= ' > ';
+            $return .= ' '.self::checkOption($options,'value').' ';
+            $return .= '</textarea>';
+
+
+            $return = self::apply_wrapper($options, $return);
+
+            return $return;
+
+        }
+
         /**
          * Creates label for form element
          *
