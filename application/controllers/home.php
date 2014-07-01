@@ -22,6 +22,7 @@
                 {
                     $ids[] = $friend->friend;
                 }
+                if (count($ids) == 0) $ids[]=0;
 
                 $messages = Message::all(array(
                     "user in ?" => $ids,

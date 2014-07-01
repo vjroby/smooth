@@ -25,6 +25,13 @@ class Message extends Shared\Model{
      */
     protected $_user;
 
+    /**
+     * used in getReplies
+     *
+     * @readwrite
+     */
+    protected $_userName;
+
     public function getReplies()
     {
         return self::all(array(
@@ -33,7 +40,7 @@ class Message extends Shared\Model{
             "deleted = ?" => false
         ), array(
             "*",
-            "(SELECT CONCAT(first, \" \", last) FROM user WHERE user.id = message.user)" => "user_name"
+            "(SELECT CONCAT(first, \" \", last) FROM user WHERE user.id = message.user)" => "userName"
         ), "created", "desc");
     }
     public static function fetchReplies($id)

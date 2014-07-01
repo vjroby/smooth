@@ -19,7 +19,11 @@ namespace Framework
                 {
                     $key = ucfirst($key);
                     $method = "set{$key}";
-                    $this->$method($value);
+                    try {
+                        $this->$method($value);
+                    }catch (Exception $e){
+                        throw new Exception(" ${method} and ${value} error! ");
+                    }
                 }
             }
         }

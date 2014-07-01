@@ -136,8 +136,8 @@ namespace Framework
                 $return .= ' readonly ';
             }
 
-            $return .= ' > ';
-            $return .= ' '.self::checkOption($options,'value').' ';
+            $return .= ' >';
+            $return .= ''.self::checkOption($options,'value').'';
             $return .= '</textarea>';
 
 

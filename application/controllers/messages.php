@@ -14,7 +14,7 @@ class Messages extends Controller{
             $message = new Message(array(
                 "body" => RequestMethods::post("body"),
                 "message" => RequestMethods::post("message"),
-                "user" => $user->id
+                "user" => $user['id']
             ));
 
             if ($message->validate())
