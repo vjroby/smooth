@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row ajaxInner">
     <div class="page-header">
         <h1>Settings <small>for your account.</small></h1>
     </div>

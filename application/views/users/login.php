@@ -1,13 +1,13 @@
 <?php
 
 ?>
-<div class="row">
+<div class="row ajaxInner">
 
         <div class="page-header">
             <h1>Login <small>To have access to wonderful features.</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3" role="form">
-            <form action="" method="POST" class="">
+            <form action="<?php echo \Framework\Smooth::baseUrl(); ?>/login" method="POST" class="">
                 <div class="form-group">
                     <label for="email" class="">Email:</label>
                     <input type="email" name="email" id="email" class="form-control"  placeholder="Enter email" />
@@ -22,9 +22,18 @@
                         <span class="help-block label label-danger"><?php echo $password_error; ?></span>
                     <?php endif; ?>
                 </div>
-                <div class="form-group">
-                    <input type="submit" name="login" value="login" class="btn btn-primary" />
-                </div>
+                <?php
+                echo \Framework\Html::input(array(
+                    "type" => "submit",
+                    "name" => "login",
+                    "value" => "login",
+                    "class" => "btn btn-primary",
+                    "wrapper" => array(
+                        "class" => "form-group"
+                    ),
+                    "customTags" => array("ajax","no")
+                ));
+                ?>
             </form>
         </div>
 </div>

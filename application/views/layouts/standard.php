@@ -28,7 +28,7 @@
 
 
 
-            <section>
+            <section id="ajaxWrapper">
                 <?php echo $content; ?>
             </section>
 

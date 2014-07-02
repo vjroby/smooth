@@ -1,7 +1,7 @@
 <?php
 $pages = array(1);
 ?>
-<div class="row">
+<div class="row ajaxInner">
     <div class="col-md-12">
         <form action="" role="form" method="POST" class="form-inline">
             <div class="form-group">

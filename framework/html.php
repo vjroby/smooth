@@ -95,6 +95,9 @@ namespace Framework
             $return .= ' id="'.self::checkOption($options,'id').'" ';
             $return .= ' value="'.self::checkOption($options,'value').'" ';
             $return .= ' type="'.self::checkOption($options,'type').'" ';
+            if (isset($options['customTags']) && is_array($options['customTags'])){
+                $return .= self::applyCustomTags($options['customTags'], $return);
+            }
 
             if ($disabled === true){
                 $return .= ' disabled ';
@@ -233,6 +236,23 @@ namespace Framework
             }else{
                 return $string;
             }
+        }
+
+        /**
+         * writes custom tags in an html element
+         *
+         *
+         * @param array $tags
+         * @param $string
+         * @return string
+         */
+        public static function applyCustomTags(array $tags, $string){
+
+            foreach ($tags as $tag  => $value) {
+                $string .= ' '.$tag.'="'.$value.'" ';
+            }
+
+            return $string;
         }
     }
 
