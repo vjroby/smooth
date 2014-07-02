@@ -137,7 +137,7 @@ class Users extends Controller{
                 "first LIKE ?" => "%".$query."%",
                 "live = ?" => true,
                 "deleted = ?" => false,
-                "id <> ?" => $user['id'],
+                "id <> ?" => $user->id,
             );
 
             $fields = array(
@@ -166,20 +166,23 @@ class Users extends Controller{
         $view = $this->getActionView();
         $user = $this->getUser();
 
+
+
         if (RequestMethods::post("update"))
         {
+
             $user_update = new User(array(
                 "id" => $user['id'],
-                "first" => RequestMethods::post("first", $user['first']),
-                "last" => RequestMethods::post("last", $user['last']),
-                "email" => RequestMethods::post("email", $user['email']),
-                "password" => RequestMethods::post("password", $user['password']),
+                "first" => RequestMethods::post("first"),
+                "last" => RequestMethods::post("last"),
+                "email" => RequestMethods::post("email"),
+                "password" => RequestMethods::post("password"),
             ));
 
             if ($user_update->validate())
             {
                 $user_update->save();
-                $this->_upload("photo", $this->user->id);
+                $this->_upload("photo", $user['id'], File::PROFILE_IMAGE);
                 $user = User::first(array(
                     "id = ?" => $user['id'],
                 ));
@@ -247,7 +250,7 @@ class Users extends Controller{
         }
     }
 
-    protected function _upload($name, $user)
+    protected function _upload($name, $user, $type = null)
     {
         if (isset($_FILES[$name]))
         {
@@ -273,7 +276,8 @@ class Users extends Controller{
                         "size" => $file["size"],
                         "width" => $width,
                         "height" => $height,
-                        "user" => $user
+                        "user" => $user,
+                        "type" => $type,
                     ));
                     $file->save();
                 }

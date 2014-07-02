@@ -2,6 +2,9 @@
 
 class File extends Shared\Model
 {
+
+    const PROFILE_IMAGE = 1;
+
     /**
      * @column
      * @readwrite
@@ -45,4 +48,11 @@ class File extends Shared\Model
      * @type integer
      */
     protected $_user;
+
+    /**
+     * @column
+     * @readwrite
+     * @type integer
+     */
+    protected $_type;
 }  

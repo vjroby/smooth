@@ -34,7 +34,6 @@ var app = {
             try{
                 $.ajax({
                     url:page
-
                 }).done(function( data ){
                     ajaxInner.replaceWith(data);
                 }).fail(function() {
@@ -42,7 +41,7 @@ var app = {
                 })
             }
             catch (err) {
-                ajaxInner.replaceWith('<div id="ajaxInner">'+err+'</div>');
+                ajaxInner.replaceWith('<div id="ajaxInner">Error from ajax: '+err+'</div>');
             }
 
         }

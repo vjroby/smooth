@@ -97,6 +97,10 @@ namespace Framework
 //            return $array;
 //        }
 
+        public function __destruct(){
+            unset($this->connector);
+        }
+
         public function load()
         {
             $primary = $this->primaryColumn;
@@ -370,10 +374,12 @@ namespace Framework
 
             if ($first)
             {
-                return $first;
-//                return new $class(
-//                    $query->first()
-//                );
+//                return $first;
+                $newUser =  new $class(
+                    $query->first()
+                );
+                $newUser->connector = null;
+                return $newUser;
             }
 
             return null;

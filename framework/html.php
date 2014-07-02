@@ -95,8 +95,9 @@ namespace Framework
             $return .= ' id="'.self::checkOption($options,'id').'" ';
             $return .= ' value="'.self::checkOption($options,'value').'" ';
             $return .= ' type="'.self::checkOption($options,'type').'" ';
+
             if (isset($options['customTags']) && is_array($options['customTags'])){
-                $return .= self::applyCustomTags($options['customTags'], $return);
+                $return .= self::applyCustomTags($options['customTags']);
             }
 
             if ($disabled === true){
@@ -246,8 +247,8 @@ namespace Framework
          * @param $string
          * @return string
          */
-        public static function applyCustomTags(array $tags, $string){
-
+        public static function applyCustomTags(array $tags){
+            $string = '';
             foreach ($tags as $tag  => $value) {
                 $string .= ' '.$tag.'="'.$value.'" ';
             }

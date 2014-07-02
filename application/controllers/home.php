@@ -11,7 +11,7 @@
             if ($user)
             {
                 $friends = Friend::all(array(
-                    "user = ?" => $user['id'],
+                    "user = ?" => $user->id,
                     "live = ?" => true,
                     "deleted = ?" => false
                 ), array("friend"));

@@ -42,6 +42,7 @@ CREATE TABLE `message` (
        `id` int(11) NOT NULL AUTO_INCREMENT,
        `name` varchar(255) DEFAULT NULL,
        `mime` varchar(32) DEFAULT NULL,
+       `type` int(11) DEFAULT NULL,
        `size` int(11) DEFAULT NULL,
        `width` int(11) DEFAULT NULL,
        `height` int(11) DEFAULT NULL,

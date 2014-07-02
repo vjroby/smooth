@@ -53,6 +53,11 @@ class User extends \Shared\Model{
      */
 //    protected $_live;
 
+    /**
+     * @readwrite
+     */
+    protected $_fileimage;
+
     public function isFriend($id)
     {
         $userId = $this->getId();
@@ -76,6 +81,12 @@ class User extends \Shared\Model{
         ));
 
         return $user->isFriend($friend);
+    }
+
+    public function getFileimage(){
+        return File::first(array(
+            "user = ?" =>$this->id, "live = ?" =>true, "deleted = ?" =>false ,
+        ), array("*"), "id", "DESC");
     }
 
 
