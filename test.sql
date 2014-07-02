@@ -37,3 +37,21 @@ CREATE TABLE `message` (
   KEY `live` (`live`),
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+     CREATE TABLE `file` (
+       `id` int(11) NOT NULL AUTO_INCREMENT,
+       `name` varchar(255) DEFAULT NULL,
+       `mime` varchar(32) DEFAULT NULL,
+       `size` int(11) DEFAULT NULL,
+       `width` int(11) DEFAULT NULL,
+       `height` int(11) DEFAULT NULL,
+       `user` int(11) DEFAULT NULL,
+       `live` tinyint(4) DEFAULT NULL,
+       `deleted` tinyint(4) DEFAULT NULL,
+       `created` datetime DEFAULT NULL,
+       `modified` datetime DEFAULT NULL,
+       PRIMARY KEY (`id`),
+       KEY `live` (`live`),
+       KEY `deleted` (`deleted`)
+
+     ) ENGINE = InnoDB DEFAULT CHARSET = utf8 ;

@@ -12,7 +12,7 @@
             <h1>Register <small>For a new account</small></h1>
         </div>
     <div class="col-md-6 col-md-offset-3" role="form">
-        <form action="" method="POST" class="">
+        <form action="" method="POST" class="" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="first" class="">First:</label>
                 <input type="text" name="first" id="first" class="form-control"  placeholder="Enter First Name" />
@@ -41,6 +41,16 @@
                     <span class="help-block label label-danger"><?php echo $password_error; ?></span>
                 <?php endif; ?>
             </div>
+            <?php echo \Framework\Html::input(array(
+                "type" => "file",
+                "name" => "photo",
+                "label" => array(
+                    "title" => "Photo"
+                ),
+                "wrapper" => array(
+                    "class" => "form-group"
+                ),
+            )); ?>
             <div class="form-group">
                 <input type="submit" name="register" value="register" class="btn btn-primary" />
             </div>

@@ -8,7 +8,7 @@
         </div>
     <?php endif; ?>
     <div class="col-md-6 col-md-offset-3">
-        <form action="" method="POST" role="form">
+        <form action="" method="POST" role="form" enctype="multipart/form-data">
                 <?php
                 echo \Framework\Html::input(array(
                     'type' => 'text' , 'name' => 'first', 'value' => $user['first'],
@@ -50,6 +50,18 @@
                         'class' => 'form-group'
                     ),
                 ));
+
+                echo \Framework\Html::input(array(
+                    "type" => "file",
+                    "name" => "photo",
+                    "label" => array(
+                        "title" => "Photo"
+                    ),
+                    "wrapper" => array(
+                        "class" => "form-group"
+                    ),
+                ));
+
                 echo \Framework\Html::input(array(
                     'type' => 'submit' , 'name' => 'update', 'value' => 'update',
                     'class' => 'btn btn-primary',
