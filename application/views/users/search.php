@@ -69,11 +69,20 @@ $pages = array(1);
            <table class="table">
                <tr>
                    <td>Name</td>
+                   <td>Picture</td>
                    <td>Actions</td>
                </tr>
                <?php foreach($users as $u): ?>
+                   <?php $file = $u->fileimage; ?>
                <tr>
                    <td><?php echo $u->first.' '.$u->last; ?></td>
+                   <td>
+                       <?php if ($file): ?>
+
+                       <img height="100" src="<?php echo \Framework\Smooth::baseUrl(); ?>/uploads/<?php echo $file->name; ?>" alt=""/>
+                       <?php endif; ?>
+
+                   </td>
                    <?php if (User::hasFriend($user->id, $u->id)): ?>
                        <td><a class="btn btn-danger" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/unfriend/<?php echo $u->id; ?>">unfriend</a></td>
                    <?php endif; ?>
