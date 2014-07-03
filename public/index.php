@@ -24,6 +24,23 @@ try{
     require("../framework/smooth.php");
     Framework\Smooth::initialize();
 
+    // plugins
+    /*
+     * in order to load plugins in this framework in the directory of the plugin there must pe a file initialize.php
+     * /application/plugins/plugindirectory/initialize.php
+     */
+
+    $path = APP_PATH . "/application/plugins";
+    $iterator = new DirectoryIterator($path);
+
+    foreach ($iterator as $item)
+    {
+        if (!$item->isDot() && $item->isDir())
+        {
+            include($path . "/" . $item->getFilename() . "/initialize.php");
+        }
+    }
+
 // 3. load and initialize the Configuration class
     $configuration = new Framework\Configuration(array(
         "type" => "ini"

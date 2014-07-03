@@ -9,6 +9,8 @@ You can find more about me [Here](http://robertgabriel.ro)
     * integrated Imagine library in project
     * Events class
     * put events in core classes
+    * Logger plugin
+
 * ver. 0.3.1
     * implemented AJAX navigation based on AJAX request
 
