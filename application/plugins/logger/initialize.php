@@ -5,7 +5,9 @@
 include("logger.php");
 
 $logger = new Logger(array(
-    "file" => APP_PATH . "/logs/" . date("Y-m-d") . ".txt"
+    "dir" => APP_PATH . "/logs/" ,
+    "file" => date("Y-m-d") . ".txt",
+    'type' => Logger::TYPE_INFO,
 ));
 
 // log cache events
