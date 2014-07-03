@@ -23,6 +23,7 @@ namespace Framework
 
         public function initialize()
         {
+            Events::fire("framework.database.initialize.before", array($this->type, $this->options));
 
             if (!$this->type)
             {
@@ -46,6 +47,8 @@ namespace Framework
             {
                 throw new Exception\Argument("Invalid type");
             }
+
+            Events::fire("framework.database.initialize.after", array($this->type, $this->options));
 
             switch ($this->type)
             {

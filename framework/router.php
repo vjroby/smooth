@@ -6,6 +6,7 @@ namespace Framework
     use Framework\Registry as Registry;
     use Framework\Utility\Inspector as Inspector;
     use Framework\Router\Exception as Exception;
+    use Framework\Events as Events;
 
     class Router extends Base{
         /**
@@ -137,10 +138,13 @@ namespace Framework
 
         public function dispatch()
         {
+
             $url= $this->url;
             $parameters = array();
             $controller = "index";
             $action = "index";
+
+            Events::fire("framework.router.dispatch.before", array($url));
 
             foreach ($this->_routes as $route)
             {
@@ -180,7 +184,7 @@ namespace Framework
                 }
 
             }
-
+            Events::fire("framework.router.dispatch.after", array($url, $controller, $action, $parameters));
             $this->_pass($controller, $action, $parameters);
         }
     }

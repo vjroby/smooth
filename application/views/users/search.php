@@ -69,6 +69,7 @@ $pages = array(1);
            <table class="table">
                <tr>
                    <td>Name</td>
+                   <td>Email</td>
                    <td>Picture</td>
                    <td>Actions</td>
                </tr>
@@ -76,18 +77,19 @@ $pages = array(1);
                    <?php $file = $u->fileimage; ?>
                <tr>
                    <td><?php echo $u->first.' '.$u->last; ?></td>
+                   <td><?php echo $u->email; ?></td>
                    <td>
                        <?php if ($file): ?>
 
-                       <img height="100" src="<?php echo \Framework\Smooth::baseUrl(); ?>/uploads/<?php echo $file->name; ?>" alt=""/>
+                       <img height="100" src="<?php echo \Framework\Smooth::baseUrl(); ?>/thumbnails/<?php echo $file->id; ?>" alt=""/>
                        <?php endif; ?>
 
                    </td>
                    <?php if (User::hasFriend($user->id, $u->id)): ?>
-                       <td><a class="btn btn-danger" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/unfriend/<?php echo $u->id; ?>">unfriend</a></td>
+                       <td><a class="btn btn-danger" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/unfriend/<?php echo $u->id; ?>" ajax="no">unfriend</a></td>
                    <?php endif; ?>
                    <?php if (!User::hasFriend($user->id, $u->id)): ?>
-                       <td><a class="btn btn-primary" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/friend/<?php echo $u->id; ?>">friend</a></td>
+                       <td><a class="btn btn-primary" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/friend/<?php echo $u->id; ?>" ajax="no">friend</a></td>
                    <?php endif; ?>
                </tr>
                <?php endforeach; ?>

@@ -2,7 +2,8 @@
 
 namespace Shared
 {
-    use Framework\Registry;
+    use Framework\Registry as Registry;
+    use Framework\Events as Events;
 
     class Controller extends \Framework\Controller{
 
@@ -22,6 +23,12 @@ namespace Shared
 
             $database = Registry::get('database');
             $this->connector = $database->connect();
+
+            // schedule disconnect from database
+            Events::add("framework.controller.destruct.after", function($name) {
+                $database = Registry::get("database");
+                $database->disconnect();
+            });
 
             $session = \Framework\Registry::get("session");
             $user = $session->get("user", null);

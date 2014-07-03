@@ -2,6 +2,7 @@
 namespace Framework
 {
     use Framework\Base as Base;
+    use Framework\Events as Events;
 //    use Framework\Configuration as Configuration;
     use Framework\Configuration\Exception as Exception;
 
@@ -24,10 +25,14 @@ namespace Framework
 
         public function initialize()
         {
+            Events::fire("framework.configuration.initialize.before", array($this->type, $this->options));
+
             if (!$this->type)
             {
                 throw new Exception\Argument("Invalid type");
             }
+
+            Events::fire("framework.configuration.initialize.after", array($this->type, $this->options));
 
             switch ($this->type)
             {

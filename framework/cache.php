@@ -2,6 +2,7 @@
 namespace Framework
 {
     use Framework\Base as Base;
+    use Framework\Events as Events;
     use Framework\Cache\Exception as Exception;
 
     class Cache extends Base{
@@ -22,6 +23,8 @@ namespace Framework
         }
 
         public function initialize(){
+
+            Events::fire("framework.cache.initialize.before", array($this->type, $this->options));
 
             if (!$this->type)
             {
@@ -46,6 +49,8 @@ namespace Framework
                 throw new Exception\Argument("Invalid type");
             }
 
+            Events::fire("framework.cache.initialize.after", array($this->type, $this->options));
+
             switch ($this->type)
             {
                 case "memcached":
@@ -59,6 +64,7 @@ namespace Framework
                     break;
                     }
             }
+
         }
     }
 }

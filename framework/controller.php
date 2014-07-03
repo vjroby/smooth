@@ -6,10 +6,17 @@ namespace Framework
     use Framework\View as View;
     use Framework\Registry as Registry;
     //use Framework\Template as Template;
+    use Framework\Events as Events;
     use Framework\Controller\Exception as Exception;
 
     class Controller extends Base
     {
+
+        /**
+         * @read
+         */
+        protected $_name;
+
         /**
          * @readwrite
          */
@@ -76,6 +83,8 @@ namespace Framework
 
         public function render()
         {
+            Events::fire("framework.controller.render.before", array($this->name));
+
             $defaultContentType = $this->getDefaultContentType();
             $results = null;
 
@@ -115,16 +124,15 @@ namespace Framework
             {
                 throw new View\Exception\Renderer("Invalid layout/template syntax.".$e->getMessage());
             }
-        }
 
-        public function __destruct()
-        {
-            $this->render();
+            Events::fire("framework.controller.render.after", array($this->name));
         }
 
         public function __construct($options = array())
         {
             parent::__construct($options);
+
+            Events::fire("framework.controller.construct.before", array($this->name));
 
             $options_view = array();
 
@@ -151,6 +159,18 @@ namespace Framework
             $view = new View($options_view);
             $this->setLayoutView($view);
             $this->setActionView($view);
+
+            Events::fire("framework.controller.construct.after", array($this->name));
+
+        }
+
+        protected function getName()
+        {
+            if (empty($this->_name))
+            {
+                $this->_name = get_class($this);
+            }
+            return $this->_name;
         }
 
         /**
@@ -201,6 +221,13 @@ namespace Framework
             $defaultLayout = $this->getDefaultLayoutAjax();
             $defaultExtension = $this->getDefaultExtension();
             $view->setFile(APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}");
+        }
+
+        public function __destruct()
+        {
+            Events::fire("framework.controller.destruct.before", array($this->name));
+            $this->render();
+            Events::fire("framework.controller.destruct.after", array($this->name));
         }
     }
 }

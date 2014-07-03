@@ -4,8 +4,8 @@ namespace Framework
 {
     use Framework\Base as Base;
     use Framework\Events as Events;
-    use Framework\Template as Template;
     use Framework\View\Exception as Exception;
+
     class View extends Base{
 
         /**
@@ -37,6 +37,7 @@ namespace Framework
         {
             parent::__construct($options);
 
+            Events::fire("framework.view.construct.before", array($this->file));
 
         }
 
@@ -47,6 +48,8 @@ namespace Framework
 
         public function render($output = false)
         {
+            Events::fire("framework.view.render.before", array($this->file));
+
             if (!file_exists($this->file))
             {
                 throw new Exception\Renderer('No view file : '. basename($this->file, ".php"));

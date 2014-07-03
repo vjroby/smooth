@@ -7,7 +7,8 @@ You can find more about me [Here](http://robertgabriel.ro)
 * ver. 0.3.1
     * thumbnails functionality with Imagine
     * integrated Imagine library in project
-
+    * Events class
+    * put events in core classes
 * ver. 0.3.1
     * implemented AJAX navigation based on AJAX request
 

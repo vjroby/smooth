@@ -141,7 +141,7 @@ class Users extends Controller{
             );
 
             $fields = array(
-                "id", "first", "last"
+                "id", "first", "last","email"
             );
 
             $count = User::count($where);
@@ -172,7 +172,7 @@ class Users extends Controller{
         {
 
             $user_update = new User(array(
-                "id" => $user['id'],
+                "id" => $user->id,
                 "first" => RequestMethods::post("first"),
                 "last" => RequestMethods::post("last"),
                 "email" => RequestMethods::post("email"),
@@ -182,9 +182,9 @@ class Users extends Controller{
             if ($user_update->validate())
             {
                 $user_update->save();
-                $this->_upload("photo", $user['id'], File::PROFILE_IMAGE);
+                $this->_upload("photo", $user->id, File::PROFILE_IMAGE);
                 $user = User::first(array(
-                    "id = ?" => $user['id'],
+                    "id = ?" => $user->id,
                 ));
                 $session = Registry::get("session");
                 $this->setUser($user);
@@ -206,7 +206,7 @@ class Users extends Controller{
         $user = $this->getUser();
 
         $friend = new Friend(array(
-            "user" => $user['id'],
+            "user" => $user->id,
             "friend" => $id
         ));
 
@@ -223,14 +223,14 @@ class Users extends Controller{
         $user = $this->getUser();
 
         $friend = Friend::first(array(
-            "user" => $user['id'],
+            "user" => $user->id,
             "friend" => $id
         ));
 
         if ($friend)
         {
             $friend = new Friend(array(
-                "id" => $friend['id']
+                "id" => $friend->id
             ));
             $friend->delete();
         }
