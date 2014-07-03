@@ -100,6 +100,7 @@ class Files extends Controller{
     public function thumbnails($id)
     {
         $path = APP_PATH."/public/uploads";
+        $path_host = \Framework\Smooth::baseUrl();
 
         $file = File::first(array(
             "id = ?" => $id
@@ -131,11 +132,11 @@ class Files extends Controller{
                         ->save("{$path}/{$thumbnail}");
                 }
 
-                header("Location: /uploads/{$thumbnail}");
+                header("Location: ".$path_host."/uploads/{$thumbnail}");
                 exit();
             }
 
-            header("Location: /uploads/{$name}");
+            header("Location: ".$path_host."/uploads/{$name}");
             exit();
         }
     }

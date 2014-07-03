@@ -4,7 +4,7 @@
         <h1>Success!</h1>
     </div>
     <?php if ($file): ?>
-        <img height="100" src="<?php echo \Framework\Smooth::baseUrl(); ?>/uploads/<?php echo $file->name; ?>" alt=""/>
+        <img height="100" src="<?php echo \Framework\Smooth::baseUrl(); ?>/thumbnails/<?php echo $file->id; ?>" alt=""/>
     <?php endif; ?>
     <?php
     echo $user->first;
