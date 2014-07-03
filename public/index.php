@@ -5,6 +5,21 @@ define("DEBUG", TRUE);
 // 1. define the default path for includes
 define("APP_PATH", dirname(dirname(__FILE__)));
 try{
+    // implement another spl_autoloader fuction for including  the new library imagine
+    //, class with capital first letter
+
+    spl_autoload_register(function($class)
+    {
+        $path = lcfirst(str_replace("\\", DIRECTORY_SEPARATOR, $class));
+        $file = APP_PATH."/application/libraries/{$path}.php";
+
+        if (file_exists($file))
+        {
+            require_once $file;
+            return true;
+        }
+    });
+
 // 2. load the Core class that includes an autoloader
     require("../framework/smooth.php");
     Framework\Smooth::initialize();

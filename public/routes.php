@@ -42,7 +42,17 @@ $routes = array(
         "pattern" => "friend/:id",
         "controller" => "users",
         "action" => "friend"
-    )
+    ),
+    array(
+        "pattern" => "fonts/:id",
+        "controller" => "files",
+        "action" => "fonts"
+    ),
+    array(
+        "pattern" => "thumbnails/:id",
+        "controller" => "files",
+        "action" => "thumbnails"
+    ),
 );
 
 // add defined routes
