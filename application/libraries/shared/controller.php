@@ -54,6 +54,23 @@ namespace Shared
 
             parent::render();
         }
+
+        public function setUser($user)
+        {
+            $session = Registry::get("session");
+
+            if ($user)
+            {
+                $session->set("user", $user);
+            }
+            else
+            {
+                $session->erase("user");
+            }
+
+            $this->_user = $user;
+            return $this;
+        }
     }
 }
  

@@ -67,8 +67,7 @@ class Users extends Controller{
 
                 if (!empty($user))
                 {
-                    $session = Registry::get("session");
-                    $session->set("user", $user);
+                    $this->user = $user;
                     $this->redirect('/users/profile');
                 }
                 else
@@ -163,7 +162,6 @@ class Users extends Controller{
      */
     public function settings()
     {
-        $view = $this->getActionView();
         $user = $this->getUser();
 
 
@@ -187,14 +185,14 @@ class Users extends Controller{
                     "id = ?" => $user->id,
                 ));
                 $session = Registry::get("session");
-                $this->setUser($user);
+                $this->user = $user;
                 $session->set("user", $user);
-                $view->set("user", $user);
-                $view->set("success", true);
+                $this->actionView->set("user", $user);
+                $this->actionView->set("success", true);
 
             }
 
-            $view->set("errors", $user_update->getErrors());
+            $this->actionView->set("errors", $user_update->getErrors());
         }
     }
 
