@@ -283,5 +283,83 @@ class Users extends Controller{
         }
     }
 
+    /**
+     * @before _secure, _admin
+     */
+    public function edit($id)
+    {
+        $errors = array();
+
+        $user = User::first(array(
+            "id = ?" => $id
+        ));
+
+        if (RequestMethods::post("save"))
+        {
+            $user->first = RequestMethods::post("first");
+            $user->last = RequestMethods::post("last");
+            $user->email = RequestMethods::post("email");
+            $user->password = RequestMethods::post("password");
+            $user->live = (boolean) RequestMethods::post("live");
+            $user->admin = (boolean) RequestMethods::post("admin");
+
+            if ($user->validate())
+            {
+                $user->save();
+                $this->actionView->set("success", true);
+            }
+
+            $errors = $user->errors;
+        }
+
+        $this->actionView
+            ->set("user", $user)
+            ->set("errors", $errors);
+    }
+
+    /**
+     * @before _secure, _admin
+     */
+    public function view()
+    {
+        $this->actionView->set("users", User::all());
+    }
+
+    /**
+     * @before _secure, _admin
+     */
+    public function delete($id)
+    {
+        $user = User::first(array(
+            "id = ?" => $id
+        ));
+
+        if ($user)
+        {
+            $user->live = false;
+            $user->save();
+        }
+
+        $this->redirect("/users/view.html");
+    }
+
+    /**
+     * @before _secure, _admin
+     */
+    public function undelete($id)
+    {
+        $user = User::first(array(
+            "id = ?" => $id
+        ));
+
+        if ($user)
+        {
+            $user->live = true;
+            $user->save();
+        }
+
+        $this->redirect("/users/view.html");
+    }
+
 }
  

@@ -53,6 +53,31 @@ $routes = array(
         "controller" => "files",
         "action" => "thumbnails"
     ),
+    array(
+        "pattern" => "users/edit/:id",
+        "controller" => "users",
+        "action" => "edit"
+    ),
+    array(
+        "pattern" => "users/delete/:id",
+        "controller" => "users",
+        "action" => "delete"
+    ),
+    array(
+        "pattern" => "users/undelete/:id",
+        "controller" => "users",
+        "action" => "undelete"
+    ),
+    array(
+        "pattern" => "files/delete/:id",
+        "controller" => "files",
+        "action" => "delete"
+    ),
+    array(
+        "pattern" => "files/undelete/:id",
+        "controller" => "files",
+        "action" => "undelete"
+    ),
 );
 
 // add defined routes

@@ -54,6 +54,13 @@ class User extends \Shared\Model{
 //    protected $_live;
 
     /**
+     * @column
+     * @readwrite
+     * @type boolean
+     */
+    protected $_admin=false;
+
+    /**
      * @readwrite
      */
     protected $_fileimage;

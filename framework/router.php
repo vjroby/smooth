@@ -73,6 +73,8 @@ namespace Framework
             $this->_controller = $controller;
             $this->_action = $action;
 
+            Events::fire("framework.router.controller.before", array($controller, $parameters));
+
             try
             {
                 $instance = new $name(array(
@@ -84,6 +86,8 @@ namespace Framework
             {
                 throw new Exception\Controller("Controller {$name} not found");
             }
+
+            Events::fire("framework.router.controller.after", array($controller, $parameters));
 
             if (!method_exists($instance, $action))
             {
@@ -122,12 +126,21 @@ namespace Framework
                 }
             };
 
+            Events::fire("framework.router.beforehooks.before", array($action, $parameters));
+
             $hooks($methodMeta, "@before");
+
+            Events::fire("framework.router.beforehooks.after", array($action, $parameters));
+            Events::fire("framework.router.action.before", array($action, $parameters));
+
 
             call_user_func_array(array(
                 $instance,
                 $action
             ), is_array($parameters) ? $parameters : array());
+
+            Events::fire("framework.router.action.after", array($action, $parameters));
+            Events::fire("framework.router.afterhooks.before", array($action, $parameters));
 
             $hooks($methodMeta, "@after");
 
