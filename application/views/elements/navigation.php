@@ -8,6 +8,10 @@
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/profile">Profile</a></li>
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/search">Search</a></li>
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/settings">Settings</a></li>
+                    <?php if ($user->admin): ?>
+                        <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/view">View Users</a></li>
+                        <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/files/view">View Files</a></li>
+                    <?php endif; ?>
                 <?php endif; ?>
                 <?php if (is_null($user)): ?>
                     <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/users/login">Login</a></li>

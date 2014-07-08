@@ -77,4 +77,13 @@
             )); ?>
         </form>
     </div>
+
+    <?php
+    $pass = '$1$amTHZJpN$E/bucsmI8g3mTN8MP/1K31';
+
+    $salt = 'amTHZJpN$';
+
+    $just_pass = 'E/bucsmI8g3mTN8MP/1K31'
+
+    ?>
 </div>

@@ -378,7 +378,7 @@ namespace Framework
                 $newUser =  new $class(
                     $query->first()
                 );
-                $newUser->connector = null;
+//                $newUser->connector = null;
                 return $newUser;
             }
 

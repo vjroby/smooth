@@ -144,7 +144,7 @@ namespace Framework
 
             $hooks($methodMeta, "@after");
 
-            // unset controller
+            // unset controller to fire the __destruct magic method
 
             Registry::erase("controller");
         }
