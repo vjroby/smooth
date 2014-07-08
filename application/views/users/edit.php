@@ -1,6 +1,6 @@
 <div class="row ajaxInner">
     <div class="page-header">
-        <h1>Settings <small>for your account.</small></h1>
+        <h1>Edit <small>user.</small></h1>
     </div>
     <?php if (isset($success)): ?>
         <div class="col-md-4 col-md-offset-3">
@@ -11,7 +11,7 @@
         <form action="" method="POST" role="form" enctype="multipart/form-data">
             <?php
             echo \Framework\Html::input(array(
-                'type' => 'text' , 'name' => 'first', 'value' => $user->first,
+                'type' => 'text' , 'name' => 'first', 'value' => $userEdit->first,
                 'class' => 'form-control',
                 'label' => array(
                     'title' =>'First name:'
@@ -21,7 +21,7 @@
                 ),
             ));
             echo \Framework\Html::input(array(
-                'type' => 'text' , 'name' => 'last', 'value' => $user->last,
+                'type' => 'text' , 'name' => 'last', 'value' => $userEdit->last,
                 'class' => 'form-control',
                 'label' => array(
                     'title' =>'Last name:'
@@ -31,7 +31,7 @@
                 ),
             ));
             echo \Framework\Html::input(array(
-                'type' => 'text' , 'name' => 'email', 'value' => $user->email,
+                'type' => 'text' , 'name' => 'email', 'value' => $userEdit->email,
                 'class' => 'form-control',
                 'label' => array(
                     'title' =>'Email:'
@@ -41,7 +41,7 @@
                 ),
             ));
             echo \Framework\Html::input(array(
-                'type' => 'password' , 'name' => 'password', 'value' => $user->password,
+                'type' => 'password' , 'name' => 'password', 'value' => $userEdit->password,
                 'class' => 'form-control',
                 'label' => array(
                     'title' =>'Password:'
@@ -54,7 +54,7 @@
             echo \Framework\Html::input(array(
                 "type" => "checkbox",
                 "name" => "live",
-                "checked" => $user->live ? 'checked' : 'unchecked',
+                "checked" => $userEdit->live ? 'checked' : 'unchecked',
                 "label" => array(
                     "title" => "Live"
                 ),
@@ -66,7 +66,7 @@
             echo \Framework\Html::input(array(
                 "type" => "checkbox",
                 "name" => "admin",
-                "checked" => $user->admin ? 'checked' : 'unchecked',
+                "checked" => $userEdit->admin ? 'checked' : 'unchecked',
                 "label" => array(
                     "title" => "Admin"
                 ),

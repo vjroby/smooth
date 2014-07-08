@@ -313,7 +313,7 @@ class Users extends Controller{
         }
 
         $this->actionView
-            ->set("user", $user)
+            ->set("userEdit", $user)
             ->set("errors", $errors);
     }
 
