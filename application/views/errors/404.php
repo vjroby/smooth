@@ -22,21 +22,21 @@
     <div class="row">
 
 
-<!--        ??php $this->element('navigation', array('user' => isset($user) ? $user : null,'muie' => 'laba')) ?>-->
+        <!--        ??php $this->element('navigation', array('user' => isset($user) ? $user : null,'muie' => 'laba')) ?>-->
     </div>
     <div class="row" style="margin-top: 58px">
 
 
 
-        <section>
-<div class="row" style="margin-top: 20px;">
-    <div class="col-md-6 col-md-offset-2">
-        <span class="label label-danger">404 Error</span>
-        <?php if(DEBUG ): ?>
-        <?php print_r($e); ?>
-        <?php endif; ?>
-    </div>
-</div>
+        <section id="ajaxWrapper">
+            <div class="row ajaxInner" style="margin-top: 20px;">
+                <div class="col-md-6 col-md-offset-2">
+                    <span class="label label-danger">404 Error</span>
+                    <?php if(DEBUG ): ?>
+                        <?php print_r($e); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
         </section>
 
     </div>

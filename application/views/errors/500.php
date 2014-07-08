@@ -28,8 +28,8 @@
 
 
 
-        <section>
-            <div class="row">
+        <section id="ajaxWrapper">
+            <div class="row ajaxInner">
                 <div class="col-md-6 col-md-offset-2">
                     <span class="label label-danger">500 Error</span>
                     <?php if(DEBUG ): ?>
