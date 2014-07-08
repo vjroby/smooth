@@ -5,7 +5,7 @@
 include("logger.php");
 
 $logger = new Logger(array(
-    "dir" => APP_PATH . "/logs/" ,
+    "dir" => APP_PATH . "/logs" ,
     "file" => date("Y-m-d") . ".txt",
     'type' => Logger::TYPE_INFO,
 ));

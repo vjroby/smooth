@@ -31,20 +31,42 @@ namespace Shared
 
         public function __construct($options = array()){
 
+
             parent::__construct($options);
 
-            $database = Registry::get('database');
-            $this->connector = $database->connect();
+            $database = Registry::get("database");
+            $database->connect();
+
+            // schedule: load user from session
+            Events::add("framework.router.beforehooks.before", function($name, $parameters) {
+                $session = Registry::get("session");
+                $controller = Registry::get("controller");
+                $user = $session->get("user");
+
+                if ($user)
+                {
+                    $controller->user = \User::first(array(
+                        "id = ?" => $user
+                    ));
+                }
+            });
+
+            // schedule: save user to session
+            Events::add("framework.router.afterhooks.after", function($name, $parameters) {
+                $session = Registry::get("session");
+                $controller = Registry::get("controller");
+
+                if ($controller->user)
+                {
+                    $session->set("user", $controller->user->id);
+                }
+            });
 
             // schedule disconnect from database
             Events::add("framework.controller.destruct.after", function($name) {
                 $database = Registry::get("database");
                 $database->disconnect();
             });
-
-            $session = \Framework\Registry::get("session");
-            $user = $session->get("user", null);
-            $this->setUser($user);
         }
 
         public function render(){
@@ -73,7 +95,7 @@ namespace Shared
 
             if ($user)
             {
-                $session->set("user", $user);
+                $session->set("user", $user->id);
             }
             else
             {
