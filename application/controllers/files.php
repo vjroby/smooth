@@ -140,5 +140,50 @@ class Files extends Controller{
             exit();
         }
     }
+
+    /**
+     * @before _secure, _admin
+     */
+    public function view()
+    {
+        $this->actionView->set("files", File::all());
+    }
+
+    /**
+     * @before _secure, _admin
+     */
+    public function delete($id)
+    {
+        $file = File::first(array(
+            "id = ?" => $id
+        ));
+
+        if ($file)
+        {
+            $file->deleted = true;
+            $file->save();
+        }
+
+        $this->redirect("/files/view.html");
+    }
+
+    /**
+     * @before _secure, _admin
+     */
+    public function undelete($id)
+    {
+        $file = File::first(array(
+            "id = ?" => $id
+        ));
+
+        if ($file)
+        {
+            $file->deleted = false;
+            $file->save();
+        }
+
+        $this->redirect("/files/view.html");
+    }
+
 }
  

@@ -7,6 +7,7 @@
             <span class="label label-success">The user has been updated!</span>
         </div>
     <?php endif; ?>
+
     <div class="col-md-6 col-md-offset-3">
         <form action="" method="POST" role="form" enctype="multipart/form-data">
             <?php
@@ -50,30 +51,35 @@
                     'class' => 'form-group'
                 ),
             ));
-
-            echo \Framework\Html::input(array(
+            $liveOptions = array(
                 "type" => "checkbox",
+                "value" => 1,
                 "name" => "live",
-                "checked" => $userEdit->live ? 'checked' : 'unchecked',
                 "label" => array(
                     "title" => "Live"
                 ),
                 "wrapper" => array(
                     "class" => "form-group"
-                ),
-            ));
+                )
+            );
+            if ($userEdit->live == 1) $liveOptions["customTags"] = array("checked" =>'checked');
+            echo \Framework\Html::input($liveOptions);
 
-            echo \Framework\Html::input(array(
+            $adminOptions = array(
                 "type" => "checkbox",
                 "name" => "admin",
-                "checked" => $userEdit->admin ? 'checked' : 'unchecked',
+                "value" => 1,
                 "label" => array(
                     "title" => "Admin"
                 ),
                 "wrapper" => array(
                     "class" => "form-group"
                 ),
-            ));
+
+            );
+            if ($userEdit->admin == 1) $adminOptions["customTags"] = array("checked" =>'checked');
+
+            echo \Framework\Html::input($adminOptions);
 
             echo \Framework\Html::input(array(
                 'type' => 'submit' , 'name' => 'save', 'value' => 'Save',
