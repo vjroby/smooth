@@ -236,17 +236,7 @@ class Users extends Controller{
         $this->redirect('/search');
     }
 
-    /**
-     * @protected
-     */
-    public function _secure()
-    {
-        $user = $this->getUser();
-        if (!$user)
-        {
-            $this->redirect('/login');
-        }
-    }
+
 
     protected function _upload($name, $user, $type = null)
     {

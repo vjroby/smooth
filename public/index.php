@@ -169,7 +169,7 @@ catch (Exception $e)
             {
                 header("Content-type: text/html");
                 include(APP_PATH."/application/views/errors/{$template}.php");
-                exit;
+                exit();
             }
         }
     }
@@ -177,6 +177,7 @@ catch (Exception $e)
     // render fallback template
 
     header("Content-type: text/html");
-    echo "An error occurred.";
-    exit;
+    echo "An error occurred.".$e->getMessage();
+    include(APP_PATH."/application/views/errors/error.php");
+    exit();
 }

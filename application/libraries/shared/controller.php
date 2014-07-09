@@ -29,6 +29,18 @@ namespace Shared
             }
         }
 
+        /**
+         * @protected
+         */
+        public function _secure()
+        {
+            $user = $this->getUser();
+            if (!$user)
+            {
+                $this->redirect('/login');
+            }
+        }
+
         public function __construct($options = array()){
 
 
