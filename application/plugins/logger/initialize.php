@@ -130,3 +130,38 @@ Framework\Events::add("framework.view.render.before", function($file) use ($logg
 {
     $logger->log("framework.view.render.before: " . $file);
 });
+
+$logger_error = new Logger(array(
+    "dir" => APP_PATH . "/logs" ,
+    "file" => date("Y-m-d") . ".txt",
+    'type' => Logger::TYPE_ERROR,
+));
+
+if (!function_exists('main_error_handler')){
+
+    function main_error_handler($errno, $errstr, $errfile, $errline){
+        GLOBAL $logger_error;
+        $string = "[Error] ". "No. ".$errno. ", File: ".$errfile.", Line: ".$errline.", String: ".$errstr.";";
+
+        $logger_error->log($string);
+       // throw new \Framework\Core\Exception($string);
+    }
+    set_error_handler('main_error_handler');
+}
+if (!function_exists('main_exception_handler')){
+
+    function main_exception_handler($exception) {
+        GLOBAL $logger_error;
+//            if(extension_loaded('xdebug')){
+//                echo'<pre class="xdebug-var-dump">'.$exception->xdebug_message.'</pre>';
+//
+//            }else{
+//
+//                print_r($exception->getMessage());
+//            }
+        $logger_error->log("Exception",$exception->getCode(),$exception->getMessage());
+
+    }
+    set_exception_handler('main_exception_handler');
+
+}

@@ -167,6 +167,7 @@ catch (Exception $e)
         {
             if ($class == $exception)
             {
+                if (isset($logger_error)) $logger_error->log("[Exception] Code:".$e->getCode().' Message:'.$e->getMessage());
                 header("Content-type: text/html");
                 include(APP_PATH."/application/views/errors/{$template}.php");
                 exit();
@@ -175,6 +176,7 @@ catch (Exception $e)
     }
 
     // render fallback template
+    if (isset($logger_error)) $logger_error->log("[Exception] Code:".$e->getCode().' Message'.$e->getMessage());
 
     header("Content-type: text/html");
     echo "An error occurred.".$e->getMessage();

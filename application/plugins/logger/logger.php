@@ -74,12 +74,14 @@ class Logger
             $times[] = $entry["time"] - $last;
             $last = $entry["time"];
         }
+        if ($this->_type === self::TYPE_INFO){
+            $messages .= "Average: " . $this->_average($times);
+            $messages .= ", Longest: " . max($times);
+            $messages .= ", Shortest: " . min($times);
+            $messages .= ", Total: " . (microtime() - $this->_start);
+            $messages .= "\n";
+        }
 
-        $messages .= "Average: " . $this->_average($times);
-        $messages .= ", Longest: " . max($times);
-        $messages .= ", Shortest: " . min($times);
-        $messages .= ", Total: " . (microtime() - $this->_start);
-        $messages .= "\n";
 
         $year = date('Y');
         $month =date('M');
@@ -110,5 +112,9 @@ class Logger
 
     protected function createDir($dir){
         if(!is_dir($dir)) mkdir($dir, $this->_log_permissions);
+    }
+
+    public static function getLoggerForErrors($options){
+        return new Logger($options);
     }
 }
