@@ -41,8 +41,12 @@
 </header>
 
 
-<?php //TODO integrate the navigation somehow
- //$this->element('navigation', array('user' => isset($user) ? $user : null,'muie' => 'laba')) ?>
+<nav class="navdrawer-container promote-layer" role="navigation">
+    <ul class="">
+            <li class=""><a href="<?php echo \Framework\Smooth::baseUrl(true); ?>/" ajax="no">Home</a></li>
+
+    </ul>
+</nav>
 
 <main>
     <section id="ajaxWrapper">

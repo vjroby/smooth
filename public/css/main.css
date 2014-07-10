@@ -343,7 +343,163 @@ section {
 
   .navdrawer-container {
     position: relative;
-    margin-top: 0; } }
+    margin-top: 0; }
+
+  .loader {
+    margin-left: 250px; } }
+/*
+  loading the elements
+*/
+.loader {
+  width: 100%;
+  height: 4px;
+  position: relative;
+  overflow: hidden; }
+
+.big {
+  height: 16px;
+  margin: 8px 0 0 0; }
+
+.loader > div {
+  position: absolute;
+  height: 100%;
+  left: 50%; }
+
+.green {
+  background: #27ae60; }
+
+.red {
+  background: #c0392b; }
+
+.blue {
+  background: #2980b9; }
+
+.yellow {
+  background: #f1c40f; }
+
+.sd0 {
+  -webkit-animation: stretch 2.8s ease 0s infinite;
+  -moz-animation: stretch 2.8s ease 0s infinite;
+  -ms-animation: stretch 2.8s ease 0s infinite;
+  -o-animation: stretch 2.8s ease 0s infinite;
+  animation: stretch 2.8s ease 0s infinite; }
+
+.sd05 {
+  -webkit-animation: stretch 2.8s ease .4s infinite;
+  -moz-animation: stretch 2.8s ease .4s infinite;
+  -ms-animation: stretch 2.8s ease .4s infinite;
+  -o-animation: stretch 2.8s ease .4s infinite;
+  animation: stretch 2.8s ease .4s infinite; }
+
+.sd1 {
+  -webkit-animation: stretch 2.8s ease .8s infinite;
+  -moz-animation: stretch 2.8s ease .8s infinite;
+  -ms-animation: stretch 2.8s ease .8s infinite;
+  -o-animation: stretch 2.8s ease .8s infinite;
+  animation: stretch 2.8s ease .8s infinite; }
+
+.sd15 {
+  -webkit-animation: stretch 2.8s ease 1.2s infinite;
+  -moz-animation: stretch 2.8s ease 1.2s infinite;
+  -ms-animation: stretch 2.8s ease 1.2s infinite;
+  -o-animation: stretch 2.8s ease 1.2s infinite;
+  animation: stretch 2.8s ease 1.2s infinite; }
+
+@keyframes stretch {
+  0% {
+    padding: 0 0 0 0;
+    left: 50%;
+    z-index: 4; }
+
+  25% {
+    z-index: 3; }
+
+  50% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 2; }
+
+  100% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 1; } }
+
+@-moz-keyframes stretch {
+  0% {
+    padding: 0 0 0 0;
+    left: 50%;
+    z-index: 4; }
+
+  25% {
+    z-index: 3; }
+
+  50% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 2; }
+
+  100% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 1; } }
+
+@-webkit-keyframes stretch {
+  0% {
+    padding: 0 0 0 0;
+    left: 50%;
+    z-index: 4; }
+
+  25% {
+    z-index: 3; }
+
+  50% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 2; }
+
+  100% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 1; } }
+
+@-ms-keyframes stretch {
+  0% {
+    padding: 0 0 0 0;
+    left: 50%;
+    z-index: 4; }
+
+  25% {
+    z-index: 3; }
+
+  50% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 2; }
+
+  100% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 1; } }
+
+@-o-keyframes stretch {
+  0% {
+    padding: 0 0 0 0;
+    left: 50%;
+    z-index: 4; }
+
+  25% {
+    z-index: 3; }
+
+  50% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 2; }
+
+  100% {
+    padding: 0 50% 0 50%;
+    left: 0;
+    z-index: 1; } }
+
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: normal;

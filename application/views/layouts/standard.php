@@ -50,6 +50,12 @@
             <!-- Put App Bar Buttons Here -->
         </section>
     </div>
+    <div class="loader">
+        <div class="green"></div>
+        <div class="red"></div>
+        <div class="blue"></div>
+        <div class="yellow"></div>
+    </div>
 </header>
 
 <?php $this->element('navigation', array('user' => isset($user) ? $user : null,'muie' => 'laba')) ?>
@@ -64,5 +70,13 @@
 <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/bootstrap.min.js" ></script>
 <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/app.js" ></script>
 <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/main.js" ></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.green').addClass('sd0');
+        $('.red').addClass('sd05');
+        $('.blue').addClass('sd1');
+        $('.yellow').addClass('sd15');
+    });
+</script>
 </body>
 </html>
