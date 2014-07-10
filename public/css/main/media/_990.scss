@@ -1,0 +1,115 @@
+/** Larger Screens - desktops and tablets **/
+@media all and (min-width: 990px) {
+  .app-bar {
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #4285f4;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .app-bar.open,
+  .app-bar.open ~ main {
+    -webkit-transform: translate(0px, 0);
+    -moz-transform: translate(0px, 0);
+    -ms-transform: translate(0px, 0);
+    -o-transform: translate(0px, 0);
+    transform: translate(0px, 0);
+  }
+
+  .app-bar-container {
+    display: block;
+    height: 20px !important;
+    max-width: 864px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    background-color: #4285f4;
+  }
+
+  .app-bar .logo {
+    float: left;
+    margin: 0;
+    padding: 0;
+    /*line-height: 130px;*/
+    font-size: 36px;
+  }
+
+  .app-bar-actions {
+    float: right;
+  }
+
+  .app-bar::after {
+    content: ' ';
+    display: block;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+  }
+
+  button.menu {
+    display: none;
+  }
+
+  nav {
+    display: block;
+    margin-top: 130px;
+  }
+
+  .navdrawer-container {
+    position: absolute !important;
+    width: 250px;
+    height: auto;
+    margin-top: 130px;
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+    overflow-y: auto;
+  }
+
+  .navdrawer-container h4 {
+    display: none;
+  }
+
+  .navdrawer-container ul {
+    display: block;
+    max-width: 864px;
+    margin: 0 auto;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    -moz-flex-direction: row;
+    flex-direction: row;
+  }
+
+  .navdrawer-container ul li {
+    border: none;
+  }
+
+  main {
+    /*max-width: 864px;*/
+    padding-top: 60px;
+    /*min-height: initial;*/
+
+    margin-left: 250px;
+    height: 100%;
+  }
+
+  body {
+    overflow-y: scroll;
+  }
+
+  .navdrawer-container {
+    position: relative;
+    margin-top: 0;
+  }
+
+}
