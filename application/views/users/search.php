@@ -55,7 +55,7 @@ $pages = array(1);
             <div class="form-group">
                 <?php  echo \Framework\Html::input(array(
                     'type' => 'submit' , 'name' => 'search', 'value' => 'search',
-                    'class' => 'btn btn-primary'
+                    'class' => 'button--primary'
                 ));?>
             </div>
 

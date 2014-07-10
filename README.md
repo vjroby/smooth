@@ -4,6 +4,11 @@ Smooth MVC Framework
 ###This is a basic Model-View-Controller framework developed by me from my experience with Codeigniter, CakePHP and Yii.
 You can find more about me [Here](http://robertgabriel.ro)
 
+* ver 0.4
+    * integrated Web Starter Kit from Google
+    * integrated SASS
+    * integrated socket.io server side
+
 * ver. 0.3.1
     * thumbnails functionality with Imagine
     * integrated Imagine library in project

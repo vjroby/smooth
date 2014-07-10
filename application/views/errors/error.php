@@ -1,49 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Smooth</title>
-    <link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/bootstrap.css"/>
-    <link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/bootstrap-theme.css"/>
-    <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/jquery-1.11.1.js" ></script>
-    <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/bootstrap.min.js" ></script>
-    <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/app.js" ></script>
-    <!--[if gte IE 9]>
-    <style type="text/css">
-        .gradient {
-            filter: none;
-        }
-    </style>
-    <![endif]-->
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" sizes="196x196" href="<?php echo \Framework\Smooth::baseUrl(); ?>/images/touch/chrome-touch-icon-196x196.png">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Web Starter Kit">
+
+<!-- Tile icon for Win8 (144x144 + tile color) -->
+<meta name="msapplication-TileImage" content="<?php echo \Framework\Smooth::baseUrl(); ?>/images/touch/ms-touch-icon-144x144-precomposed.png">
+<meta name="msapplication-TileColor" content="#3372DF">
+
+<title>Smooth</title>
+
+<!-- build:css styles/components/main.min.css -->
+<link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/h5bp.css">
+<link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/components/components.css">
+<link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/main.css">
+<!-- endbuild -->
+
+<link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/bootstrap.css"/>
+<link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/bootstrap-theme.css"/>
+
+<!--[if gte IE 9]>
+<style type="text/css">
+    .gradient {
+        filter: none;
+    }
+</style>
+<![endif]-->
 </head>
 <body>
-<div class="big-container container">
-    <div class="row">
-
-
-        <!--        ??php $this->element('navigation', array('user' => isset($user) ? $user : null,'muie' => 'laba')) ?>-->
-    </div>
-    <div class="row" style="margin-top: 58px">
-
-
-
-        <section id="ajaxWrapper">
-            <div class="row ajaxInner">
-                <div class="col-md-6 col-md-offset-2">
-                    <span class="label label-danger">500 Error</span>
-                    <?php if(DEBUG ): ?>
-                        <p><?php echo $e->getMessage()?></p>
-                        <p><b>The stack trace is as fallows</b></p>
-                        <p><?php echo $e->getTraceAsString()?></p>
-                        <p>The error:</p>
-                        <?php print_r($e); ?>
-                    <?php endif; ?>
-                </div>
-            </div>
+<header class="app-bar promote-layer">
+    <div class="app-bar-container">
+        <button class="menu"><img src="<?php echo \Framework\Smooth::baseUrl(); ?>/images/hamburger.svg" alt="Menu"></button>
+        <h1 class="logo">Web Starter Kit</h1>
+        <section class="app-bar-actions">
+            <!-- Put App Bar Buttons Here -->
         </section>
-
     </div>
-</div>
+</header>
+
+
+<?php $this->element('navigation', array('user' => isset($user) ? $user : null,'muie' => 'laba')) ?>
+
+<main>
+    <section id="ajaxWrapper">
+        <div class="row ajaxInner">
+            <div class="col-md-6 col-md-offset-2">
+                <span class="label label-danger">500 Error</span>
+                <?php if(DEBUG ): ?>
+                    <p><?php echo $e->getMessage()?></p>
+                    <p><b>The stack trace is as fallows</b></p>
+                    <p><?php echo $e->getTraceAsString()?></p>
+                    <p>The error:</p>
+                    <?php print_r($e); ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/jquery-1.11.1.js" ></script>
+<script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/app.js" ></script>
+<script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/main.js" ></script>
 </body>
 </html>

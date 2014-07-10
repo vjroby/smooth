@@ -27,7 +27,7 @@
                     "type" => "submit",
                     "name" => "login",
                     "value" => "login",
-                    "class" => "btn btn-primary",
+                    "class" => "button--primary",
                     "wrapper" => array(
                         "class" => "form-group"
                     ),

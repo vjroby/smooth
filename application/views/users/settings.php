@@ -65,7 +65,7 @@
 
                 echo \Framework\Html::input(array(
                     'type' => 'submit' , 'name' => 'update', 'value' => 'update',
-                    'class' => 'btn btn-primary',
+                    'class' => 'button--primary',
                     'wrapper' => array(
                         'class' => 'form-group'
                     ),
