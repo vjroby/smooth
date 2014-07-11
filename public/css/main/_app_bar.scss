@@ -10,7 +10,7 @@
   left: 0;
   background-color: #4285f4;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
 }
 
 .app-bar-container {
@@ -78,6 +78,14 @@
 .app-bar button img {
   width: 60px;
   height: 60px;
+}
+.app-bar .app-bar-container .menu img:nth-child(2) {
+  opacity: 0;
+}
+.app-bar.open .app-bar-container .menu img:nth-child(2) {
+  opacity: 1;
+}.app-bar.open .app-bar-container .menu img:first-child {
+  opacity: 0;
 }
 
 .app-bar button:hover {

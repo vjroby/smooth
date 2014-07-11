@@ -44,6 +44,7 @@
     <div class="app-bar-container">
         <button class="menu">
             <img src="<?php echo \Framework\Smooth::baseUrl(); ?>/images/hamburger.svg" alt="Menu">
+            <img src="<?php echo \Framework\Smooth::baseUrl(); ?>/images/close-icon-light.png" alt="Menu">
         </button>
         <button class="menu-large">
             <i class="icon icon-chevron-left"></i>
@@ -53,7 +54,7 @@
             <!-- Put App Bar Buttons Here -->
         </section>
     </div>
-    <div class="loader">
+    <div class="loader loader-hide">
         <div class="green"></div>
         <div class="red"></div>
         <div class="blue"></div>
@@ -73,13 +74,5 @@
 <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/bootstrap.min.js" ></script>
 <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/app.js" ></script>
 <script type="text/javascript" src="<?php echo \Framework\Smooth::baseUrl(); ?>/js/main.js" ></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.green').addClass('sd0');
-        $('.red').addClass('sd05');
-        $('.blue').addClass('sd1');
-        $('.yellow').addClass('sd15');
-    });
-</script>
 </body>
 </html>

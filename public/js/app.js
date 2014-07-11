@@ -30,18 +30,29 @@ var app = {
                 var stateObj = {href: href}; // state object are used when trying to go forward or backward
                 history.pushState(stateObj, "AJAX-PAGE", href);
             }
-
+            that.loadingShow(".loader", "loader-hide")
             try{
                 $.ajax({
                     url:page
                 }).done(function( data ){
                     ajaxInner.replaceWith(data);
+                    setTimeout(function(){
+                        that.loadingHide(".loader", "loader-hide");
+                    },200);
                 }).fail(function() {
+
                     alert( "error" );
+
+                    setTimeout(function(){
+                        that.loadingHide(".loader", "loader-hide");
+                    },200);
                 })
             }
             catch (err) {
                 ajaxInner.replaceWith('<div id="ajaxInner">Error from ajax: '+err+'</div>');
+                setTimeout(function(){
+                    that.loadingHide(".loader", "loader-hide");
+                },200);
             }
 
         }
@@ -74,6 +85,23 @@ var app = {
             else target = (target == '_blank') ? true : false;
 
             that.navigate(href, ajax, animation, false, target);
+        });
+    },
+    loadingShow: function loadingShow(elementClass, hideCLass){
+        $(elementClass).removeClass(hideCLass);
+    },
+    loadingHide: function loadingHide(elementClass, hideClass){
+        setTimeout(function(){
+            $(elementClass).addClass(hideClass);
+        },500);
+
+    },
+    activateColorsLoader: function activateColorsLoader(){
+        $(document).ready(function() {
+            $('.green').addClass('sd0');
+            $('.red').addClass('sd05');
+            $('.blue').addClass('sd1');
+            $('.yellow').addClass('sd15');
         });
     }
 };
@@ -139,4 +167,5 @@ app.activateMenulargeButton = function activateMenulargeButton(){
 $(document).ready(function(){
     app.applyAjaxNavigation();
     app.activateMenulargeButton();
+    app.activateColorsLoader();
 });
