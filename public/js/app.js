@@ -120,6 +120,23 @@ app.tel_numbers = function tel_numbers(){
     });
 };
 
+app.activateMenulargeButton = function activateMenulargeButton(){
+  var button = $('button.menu-large'),
+      appBar = $('.app-bar'),
+      main = $('main'),
+      navDrawer = $('.navdrawer-container');
+
+    function close(){
+        appBar.toggleClass('close-side-bar');
+        main.toggleClass('close-side-bar');
+        navDrawer.toggleClass('close-side-bar');
+    }
+    button.on('click', function(){
+        close();
+    })
+};
+
 $(document).ready(function(){
     app.applyAjaxNavigation();
+    app.activateMenulargeButton();
 });

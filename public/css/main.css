@@ -1,5 +1,9 @@
 /**
-
+  _variables.scss
+*/
+/*==========  VARIABLES  ==========*/
+/**
+_global.scss
 */
 /*
  * Web Starter Kit
@@ -124,11 +128,14 @@ app bar
   background-color: rgba(255, 255, 255, 0.4); }
 
 /*
-navdrawer
+  _navdrawer.scss
 */
 button.menu img {
   height: 24px;
   width: 24px; }
+
+.menu-large {
+  float: left; }
 
 .promote-layer {
   /*
@@ -245,11 +252,24 @@ section {
   pointer-events: none; }
 
 /*
-  Media query 990px
+  Media query 990px , _990.scss
 */
 /** Larger Screens - desktops and tablets **/
 @media all and (min-width: 990px) {
+  button.menu-large i {
+    height: 20px;
+    width: 24px; }
+
+  .app-bar button.menu-large {
+    padding-top: 7px !important;
+    height: 60px !important; }
+
   .app-bar {
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
     position: absolute;
     display: block;
     width: 100%;
@@ -257,7 +277,11 @@ section {
     left: 0;
     background-color: #4285f4;
     overflow: hidden;
-    z-index: 1; }
+    z-index: 1;
+    padding-left: 250px; }
+
+  .app-bar.close-side-bar {
+    padding-left: 0 !important; }
 
   .app-bar.open,
   .app-bar.open ~ main {
@@ -269,9 +293,6 @@ section {
 
   .app-bar-container {
     display: block;
-    height: 20px !important;
-    max-width: 864px;
-    padding: 0 16px;
     box-sizing: border-box;
     background-color: #4285f4; }
 
@@ -300,6 +321,11 @@ section {
     margin-top: 130px; }
 
   .navdrawer-container {
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
     position: absolute !important;
     width: 250px;
     height: auto;
@@ -309,12 +335,10 @@ section {
     -ms-transform: translate(0, 0);
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
-    -webkit-transition: none;
-    -moz-transition: none;
-    -ms-transition: none;
-    -o-transition: none;
-    transition: none;
     overflow-y: auto; }
+
+  .navdrawer-container.close-side-bar {
+    width: 0 !important; }
 
   .navdrawer-container h4 {
     display: none; }
@@ -332,22 +356,28 @@ section {
     border: none; }
 
   main {
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
     /*max-width: 864px;*/
     padding-top: 60px;
     /*min-height: initial;*/
     margin-left: 250px;
     height: 100%; }
 
+  main.close-side-bar {
+    margin-left: 0 !important; }
+
   body {
     overflow-y: scroll; }
 
   .navdrawer-container {
     position: relative;
-    margin-top: 0; }
-
-  .loader {
-    margin-left: 250px; } }
+    margin-top: 0; } }
 /*
+  _loader.scss
   loading the elements
 */
 .loader {

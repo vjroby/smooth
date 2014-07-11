@@ -1,6 +1,21 @@
 /** Larger Screens - desktops and tablets **/
 @media all and (min-width: 990px) {
+
+  button.menu-large i {
+    height:20px;
+    width: 24px;
+  }
+  .app-bar button.menu-large{
+    padding-top: 7px!important;
+    height: 60px !important;
+  }
+
   .app-bar {
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
     position: absolute;
     display: block;
     width: 100%;
@@ -9,8 +24,13 @@
     background-color: #4285f4;
     overflow: hidden;
     z-index: 1;
+    padding-left: $sidebarWidth;
   }
 
+  .app-bar.close-side-bar{
+
+    padding-left: 0 !important;
+  }
   .app-bar.open,
   .app-bar.open ~ main {
     -webkit-transform: translate(0px, 0);
@@ -22,9 +42,9 @@
 
   .app-bar-container {
     display: block;
-    height: 20px !important;
-    max-width: 864px;
-    padding: 0 16px;
+//    height: 20px !important;
+//    max-width: 864px;
+//    padding: 0 16px;
     box-sizing: border-box;
     background-color: #4285f4;
   }
@@ -59,8 +79,13 @@
   }
 
   .navdrawer-container {
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
     position: absolute !important;
-    width: 250px;
+    width: $sidebarWidth;
     height: auto;
     margin-top: 130px;
     -webkit-transform: translate(0, 0);
@@ -68,13 +93,13 @@
     -ms-transform: translate(0, 0);
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
-    -webkit-transition: none;
-    -moz-transition: none;
-    -ms-transition: none;
-    -o-transition: none;
-    transition: none;
+
     overflow-y: auto;
   }
+  .navdrawer-container.close-side-bar {
+    width: 0 !important;
+  }
+
 
   .navdrawer-container h4 {
     display: none;
@@ -95,12 +120,20 @@
   }
 
   main {
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
     /*max-width: 864px;*/
     padding-top: 60px;
     /*min-height: initial;*/
 
     margin-left: 250px;
     height: 100%;
+  }
+  main.close-side-bar{
+    margin-left: 0 !important;
   }
 
   body {
@@ -112,7 +145,7 @@
     margin-top: 0;
   }
   .loader{
-    margin-left: 250px;
+//    margin-left: 250px;
   }
 
 }

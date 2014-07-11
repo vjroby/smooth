@@ -1,5 +1,9 @@
 /**
-
+  _variables.scss
+*/
+@import "main/_variables";
+/**
+_global.scss
 */
 @import "main/_global";
 /*
@@ -7,16 +11,17 @@ app bar
 */
 @import "main/_app_bar";
 /*
-navdrawer
+  _navdrawer.scss
 */
 @import "main/_navdrawer";
 
 /*
-  Media query 990px
+  Media query 990px , _990.scss
 */
 @import "main/media/_990";
 
 /*
+  _loader.scss
   loading the elements
 */
 @import "main/elements/_loader";

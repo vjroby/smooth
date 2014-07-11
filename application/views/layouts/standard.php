@@ -45,6 +45,9 @@
         <button class="menu">
             <img src="<?php echo \Framework\Smooth::baseUrl(); ?>/images/hamburger.svg" alt="Menu">
         </button>
+        <button class="menu-large">
+            <i class="icon icon-chevron-left"></i>
+        </button>
         <h6 class="logo">Smooth Framework</h6>
         <section class="app-bar-actions">
             <!-- Put App Bar Buttons Here -->
