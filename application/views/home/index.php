@@ -53,6 +53,8 @@
             </div>
         <?php endif; ?>
     </div>
+    <?php if (isset($user)): ?>
+
     <div class="col-md-4 col-md-offset-3">
         <form action="<?php echo \Framework\Smooth::baseUrl(true); ?>/messages/add" method="POST" role="form">
             <?php
@@ -77,6 +79,7 @@
             )); ?>
         </form>
     </div>
+    <?php endif; ?>
 
     <?php
     $pass = '$1$amTHZJpN$E/bucsmI8g3mTN8MP/1K31';
