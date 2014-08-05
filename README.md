@@ -4,6 +4,21 @@ Smooth MVC Framework
 ###This is a basic Model-View-Controller framework developed by me from my experience with Codeigniter, CakePHP and Yii.
 You can find more about me [Here](http://robertgabriel.ro)
 
+##INSTALATION
+
+The web server must support mod_rewrite with .htaccess files. The .htaccess fie from webroot redirects all requests to ./public directory. The second .htaccess file creates two query parameters of type GET _url_ and _extension_ .
+If the _url_ isn't set as a $_GET['url'] in PHP then the framework loads the default controller and action.
+
+The configuration files are located in ./application/configuration/ .There are ini files and are pretty straight forward.
+
+There is also a routes.php file located in ./public/ from there you can configure your own routes, there are set as objects.
+
+##Changelog
+
+* ver 0.4.1
+    * integrated language files with xml
+    * changed .htaccess to accept parameters with colon (name:value)
+
 * ver 0.4
     * integrated Web Starter Kit from Google
     * integrated SASS
