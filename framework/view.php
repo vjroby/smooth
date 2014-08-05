@@ -33,6 +33,12 @@ namespace Framework
          */
         protected $_content;
 
+        /**
+         * @readwrite
+         */
+        protected $_isForApi = false;
+
+
         public function __construct($options = array())
         {
             parent::__construct($options);
@@ -55,10 +61,19 @@ namespace Framework
                 throw new Exception\Renderer('No view file : '. basename($this->file, ".php"));
             }
 
+            if ($this->isForApi){
+                header('Content-Type: application/json');
+            }
+
             $data = $this->data;
             foreach ($data as $variable_name =>  $value) {
                 $$variable_name = $value;
             }
+            //load the language
+            if (isset($language)){
+                throw new Exception('variable language is already used , choose another name');
+            }
+            $language = Registry::get('language');
 
             $data = $this->data;
             $content = $this->content;
@@ -75,6 +90,12 @@ namespace Framework
                 $$variable_name = $value;
             }
             try {
+                //load the language
+                if (isset($language)){
+                    throw new Exception('variable language is already used , choose another name');
+                }
+                $language = Registry::get('language');
+
                 ob_start();
                 include($this->actionFile);
                 $this->content = ob_get_contents();
@@ -153,4 +174,3 @@ namespace Framework
         }
     }
 }
- 
