@@ -6,7 +6,7 @@ You can find more about me [Here](http://robertgabriel.ro)
 
 ##INSTALATION
 
-The web server must support mod_rewrite with .htaccess files. The .htaccess fie from webroot redirects all requests to ./public directory. The second .htaccess file creates two query parameters of type GET _url_ and _extension_ .
+The web server must support mod_rewrite with .htaccess files. The .htaccess fie from webroot redirects all requests to ./public directory. The second .htaccess file, from ./public, creates two query parameters of type GET _url_ and _extension_ .
 If the _url_ isn't set as a $_GET['url'] in PHP then the framework loads the default controller and action.
 
 The configuration files are located in ./application/configuration/ .There are ini files and are pretty straight forward.
