@@ -5,6 +5,7 @@
             <col span="1">
             <thead>
             <tr>
+
                 <th>Thumbnail</th>
                 <th>Change</th>
             </tr>

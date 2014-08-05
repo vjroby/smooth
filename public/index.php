@@ -76,7 +76,7 @@ try{
 
 
 
-// 8. dispatch the current request
+// 8. dispatch the current request after adding all the routes
     $router->dispatch();
 // 10. unset global variables
     unset($configuration);
