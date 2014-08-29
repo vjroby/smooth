@@ -15,6 +15,13 @@ There is also a routes.php file located in ./public/ from there you can configur
 
 ##Changelog
 
+*vre 0.5
+    * changed where functionality in mysql queries
+    * added join in query class
+    * view for api
+    * route for api with HTTP methods
+    * listen for HTTP methods if necessary
+
 * ver 0.4.1
     * integrated language files with xml
     * changed .htaccess to accept parameters with colon (name:value)
