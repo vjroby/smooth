@@ -6,7 +6,57 @@ namespace Framework
     use Framework\HttpRequest\Exception as Exception;
 
     class HttpRequest extends Base {
+        const HTTP_RESPONSE_OK = 200;
+        const HTTP_RESPONSE_NO_CONTENT = 204;
+        const HTTP_RESPONSE_MOVED_PERMANENTLY = 301;
+        const HTTP_RESPONSE_FOUND = 302;
+        const HTTP_RESPONSE_BAD_REQUEST = 400;
+        const HTTP_RESPONSE_UNAUTHORIZED = 401;
+        const HTTP_RESPONSE_ACCOUNT_BLOCKED = 402;
+        const HTTP_RESPONSE_FORBIDDEN = 403;
+        const HTTP_RESPONSE_NOT_FOUND = 404;
+        const HTTP_RESPONSE_INTERNAL_SERVER_ERROR = 500;
+        const HTTP_RESPONSE_UNKNOWN = 000;
 
+        /**
+         * @read
+         */
+        private $_httpResponseStrings = array(
+            self::HTTP_RESPONSE_OK => "OK",
+            self::HTTP_RESPONSE_NO_CONTENT => "No Content",
+            self::HTTP_RESPONSE_MOVED_PERMANENTLY => "Moved Permanently",
+            self::HTTP_RESPONSE_FOUND => "Found",
+            self::HTTP_RESPONSE_BAD_REQUEST => "Bad Request",
+            self::HTTP_RESPONSE_UNAUTHORIZED => "Unauthorized",
+            self::HTTP_RESPONSE_FORBIDDEN => "Forbidden",
+            self::HTTP_RESPONSE_NOT_FOUND => "Not Found",
+            self::HTTP_RESPONSE_INTERNAL_SERVER_ERROR => "Internal Server Error",
+            self::HTTP_RESPONSE_UNKNOWN => "Unknown",
+        );
+
+        const METHOD_GET = 0;
+        const METHOD_POST = 1;
+        const METHOD_PUT = 2;
+        const METHOD_DELETE = 3;
+        const METHOD_OPTIONS = 4;
+
+        const FORMAT_JSON = 0;
+        const FORMAT_XML = 1;
+
+        const STATUS_OK = 1;
+        const STATUS_ERROR = 0;
+
+        const HEADER_ACCEPT_ANY = '*/*';
+        const HEADER_ACCEPT_PLAIN_TEXT = 'text/plain';
+        const HEADER_ACCEPT_HTML = 'text/html';
+        const HEADER_ACCEPT_JSON = 'application/json';
+        const HEADER_ACCEPT_XML = 'application/xml';
+        const HEADER_ACCEPT_ATOM = 'application/atom+xml';
+        const HEADER_ACCEPT_ENCODING = 'Accept-Encoding';
+
+        const HEADER_DATA_FEED_TYPE = 'Feed Data-Type';
+        const HEADER_SECURITY_KEY = 'Feed Security-Key';
+        const HEADER_TOKEN_KEY = 'Feed Token';
         /**
          * @readwrite
          */
@@ -31,6 +81,50 @@ namespace Framework
          * @readwrite
          */
         protected $_port;
+
+        /**
+         * @readwrite
+         */
+        protected $_isApiRequest;
+
+        /**
+         * @readwrite
+         */
+        protected $_httpResponseCode = self::HTTP_RESPONSE_OK;
+
+
+
+        /**
+         * Returns the request method that the user has accessed.
+         *
+         * @return mixed
+         */
+        public static function getRequestMethod() {
+            $header_request_method = $_SERVER['REQUEST_METHOD'];
+
+            switch($header_request_method) {
+                case 'GET':
+                    return self::METHOD_GET;
+
+                case 'POST':
+                    return self::METHOD_POST;
+
+                case 'PUT':
+                    return self::METHOD_PUT;
+
+                case 'DELETE':
+                    return self::METHOD_DELETE;
+
+                default:
+                    return self::METHOD_GET;
+            }
+        }
+
+        public function getHttpResponseMessage($http_response) {
+            if(isset($this->_httpResponseStrings[$http_response])) return $this->_httpResponseStrings[$http_response];
+            return self::HTTP_RESPONSE_UNKNOWN;
+        }
+
 
         /**
          * @return mixed|string
@@ -63,8 +157,25 @@ namespace Framework
          */
         public function getBaseUrl($absolute = false)
         {
-            if($this->_baseUrl===null)
-                $this->_baseUrl=rtrim(dirname($this->getScriptUrl()),'\\public/');
+            $dirname = dirname($this->getScriptUrl());
+
+
+
+            if($this->_baseUrl===null){
+                $dirname = explode('/',dirname(trim($this->getScriptUrl())));
+                $this->_baseUrl = null;
+
+                foreach ($dirname as $dir) {
+                    if (strlen($dir) != 0 && $dir != 'public' ){
+                        $this->_baseUrl = DIRECTORY_SEPARATOR.$dir;
+                        break;
+                    }
+                }
+
+
+
+            }
+
             return $absolute ? $this->getHostInfo() . $this->_baseUrl : $this->_baseUrl;
         }
 
@@ -114,7 +225,12 @@ namespace Framework
          */
         public function getIsAjaxRequest()
         {
-            return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']==='XMLHttpRequest';
+            if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']==='XMLHttpRequest'){
+                \Framework\Registry::get('httpRequest')->setIsApiRequest(true);
+                return true;
+            }else{
+                return false;
+            }
         }
 
         /**
@@ -141,6 +257,48 @@ namespace Framework
             if($this->_port===null)
                 $this->_port=!$this->getIsSslConnection() && isset($_SERVER['SERVER_PORT']) ? (int)$_SERVER['SERVER_PORT'] : 80;
             return $this->_port;
+        }
+
+        public function getIsApiRequest(){
+            if ($this->_isApiRequest === null){
+                return false;
+            }else{
+                return $this->_isApiRequest;
+            }
+        }
+
+        public function setIsApiRequest($value){
+            $this->_isApiRequest = $value;
+        }
+
+        /**
+         * @return int
+         */
+        public function getRequestFormat() {
+            $header_accept = null;
+            if(isset($_SERVER['HTTP_ACCEPT'])){
+                $header_accept = $_SERVER['HTTP_ACCEPT'];
+            }
+
+
+            // We check the accept header and if it contains application/xml we return format xml.
+            // Otherwise we return format json for any accept header.
+            if($header_accept == self::HEADER_ACCEPT_XML) {
+                return self::FORMAT_XML;
+            }
+
+            return self::FORMAT_JSON;
+        }
+
+        public function setResponseCode( $code){
+            $this->_httpResponseCode = $code;
+        }
+
+        /**
+         * creates the Http Response Code in header
+         */
+        public function createRequestHeader(){
+            header('HTTP/1.1 '.$this->httpResponseCode.' '.$this->getHttpResponseMessage($this->httpResponseCode));
         }
     }
 }
