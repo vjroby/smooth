@@ -140,7 +140,11 @@ $logger_error = new Logger(array(
 if (!function_exists('main_error_handler')){
 
     function main_error_handler($errno, $errstr, $errfile, $errline){
-        GLOBAL $logger_error;
+        $logger_error = new Logger(array(
+            "dir" => APP_PATH . "/logs" ,
+            "file" => date("Y-m-d") . ".txt",
+            'type' => Logger::TYPE_ERROR,
+        ));
         $string = "[Error] ". "No. ".$errno. ", File: ".$errfile.", Line: ".$errline.", String: ".$errstr.";";
 
         $logger_error->log($string);

@@ -35,9 +35,9 @@ class Message extends Shared\Model{
     public function getReplies()
     {
         return self::all(array(
-            "message = ?" => $this->getId(),
-            "live = ?" => true,
-            "deleted = ?" => false
+            "message" => $this->getId(),
+            "live" => true,
+            "deleted" => false
         ), array(
             "*",
             "(SELECT CONCAT(first, \" \", last) FROM user WHERE user.id = message.user)" => "userName"

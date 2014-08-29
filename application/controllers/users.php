@@ -133,10 +133,10 @@ class Users extends Controller{
         if (RequestMethods::post("search"))
         {
             $where = array(
-                "first LIKE ?" => "%".$query."%",
-                "live = ?" => true,
-                "deleted = ?" => false,
-                "id <> ?" => $user->id,
+                "first" =>array("%".$query."%",'LIKE'),
+                "live" => true,
+                "deleted" => false,
+                "id" => array($user->id,'<>'),
             );
 
             $fields = array(
@@ -182,7 +182,7 @@ class Users extends Controller{
                 $user_update->save();
                 $this->_upload("photo", $user->id, File::PROFILE_IMAGE);
                 $user = User::first(array(
-                    "id = ?" => $user->id,
+                    "id" => $user->id,
                 ));
                 $session = Registry::get("session");
                 $this->user = $user;
@@ -281,7 +281,7 @@ class Users extends Controller{
         $errors = array();
 
         $user = User::first(array(
-            "id = ?" => $id
+            "id" => $id
         ));
 
         if (RequestMethods::post("save"))
@@ -321,7 +321,7 @@ class Users extends Controller{
     public function delete($id)
     {
         $user = User::first(array(
-            "id = ?" => $id
+            "id" => $id
         ));
 
         if ($user)
@@ -339,7 +339,7 @@ class Users extends Controller{
     public function undelete($id)
     {
         $user = User::first(array(
-            "id = ?" => $id
+            "id" => $id
         ));
 
         if ($user)

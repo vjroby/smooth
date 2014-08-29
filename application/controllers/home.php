@@ -11,9 +11,9 @@
             if ($user)
             {
                 $friends = Friend::all(array(
-                    "user = ?" => $user->id,
-                    "live = ?" => true,
-                    "deleted = ?" => false
+                    "user" => $user->id,
+                    "live" => true,
+                    "deleted" => false
                 ), array("friend"));
 
                 $ids = array();
@@ -25,9 +25,9 @@
                 if (count($ids) == 0) $ids[]=0;
 
                 $messages = Message::all(array(
-                    "user in ?" => $ids,
-                    "live = ?" => true,
-                    "deleted = ?" => false
+                    "user" =>array( $ids,'IN'),
+                    "live" => true,
+                    "deleted" => false
                 ), array("*"), "created", "asc");
 
                 $view->set("messages", $messages);

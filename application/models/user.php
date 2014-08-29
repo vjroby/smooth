@@ -70,8 +70,8 @@ class User extends \Shared\Model{
         $userId = $this->getId();
 
         $friend = Friend::first(array(
-            "user = ?" => $this->getId(),
-            "friend = ?" => $id
+            "user" => $this->getId(),
+            "friend" => $id
         ));
 
         if ($friend)
@@ -92,7 +92,7 @@ class User extends \Shared\Model{
 
     public function getFileimage(){
         return File::first(array(
-            "user = ?" =>$this->id, "live = ?" =>true, "deleted = ?" =>false ,
+            "user" =>$this->id, "live" =>true, "deleted" =>false ,
         ), array("*"), "id", "DESC");
     }
 
