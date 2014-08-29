@@ -29,12 +29,13 @@ namespace Framework
             "integer",
             "decimal",
             "boolean",
-            "datetime"
+            "datetime",
+            "double",
         );
 
         /**
-        * @read
-        */
+         * @read
+         */
         protected $_validators = array(
             "required" => array(
                 "handler" => "_validateRequired",
@@ -70,6 +71,10 @@ namespace Framework
         protected $_columns;
 
         protected $_primary;
+        /**
+         * @var array
+         */
+        public $joins = array();
 
         public function _getExceptionForImplementation($method)
         {
@@ -79,7 +84,7 @@ namespace Framework
         public function __construct($options = array())
         {
             parent::__construct($options);
-            $this->load();
+            //$this->load();
         }
 
 
@@ -113,7 +118,7 @@ namespace Framework
                 $previous = $this->connector
                     ->query()
                     ->from($this->table)
-                    ->where("{$name} = ?", $this->$raw)
+                    ->where("{$name}", $this->$raw)
                     ->first();
 
                 if ($previous == null)
@@ -144,7 +149,7 @@ namespace Framework
                 return $this->connector
                     ->query()
                     ->from($this->table)
-                    ->where("{$name} = ?", $this->$raw)
+                    ->where("{$name}", $this->$raw)
                     ->delete();
             }
         }
@@ -178,7 +183,7 @@ namespace Framework
 
             if (!empty($this->$raw))
             {
-                $query->where("{$name} = ?", $this->$raw);
+                $query->where($name, $this->$raw);
             }
 
             $data = array();
@@ -187,6 +192,7 @@ namespace Framework
                 if (!$column["read"])
                 {
                     $prop = $column["raw"];
+                    $query->_params[$key] = $this->$prop;
                     $data[$key] = $this->$prop;
                     continue;
                 }
@@ -194,6 +200,7 @@ namespace Framework
                 if ($column != $this->primaryColumn && $column)
                 {
                     $method = "get".ucfirst($key);
+                    $query->_params[$key] = $this->$method();
                     $data[$key] = $this->$method();
                     continue;
                 }
@@ -345,22 +352,64 @@ namespace Framework
             return $this->_primary;
         }
 
+        /**
+         * @param array $where
+         * @param array $fields
+         * @param null $order
+         * @param null $direction
+         * @return mixed
+         */
         public static function first($where = array(), $fields = array("*"), $order = null, $direction = null)
         {
             $model = new static();
             return $model->_first($where, $fields, $order, $direction);
         }
 
-        protected function _first($where = array(), $fields = array("*"), $order = null, $direction = null)
+        /**
+         * @param array $where
+         * @param array $fields
+         * @param null $order
+         * @param null $direction
+         * @return mixed
+         */
+        public static function firstWithJoin($where = array(), $fields = array("*"), $order = null, $direction = null)
+        {
+            $model = new static();
+            $joins = array();
+            if (count($model->joins) != 0) $joins = $model->joins;
+            return $model->_first($where, $fields, $order, $direction, $joins);
+        }
+
+        /**
+         * @param array $where
+         * @param array $fields
+         * @param null $order
+         * @param null $direction
+         * @param array $joins
+         * @return null
+         */
+        protected function _first($where = array(), $fields = array("*"), $order = null, $direction = null, $joins = array())
         {
             $query = $this
                 ->connector
                 ->query()
                 ->from($this->table, $fields);
 
+            foreach ($joins as $table => $values) {
+                $query->join($table,$values['ON'], $values['fields']);
+            }
+
             foreach ($where as $clause => $value)
             {
-                $query->where($clause, $value);
+                if(is_array($value)){
+                    if (!isset($value[1])){
+                        $query->where($clause, $value[0]);
+                    }else{
+                        $query->where($clause, $value[0], $value[1]);
+                    }
+                }else{
+                    $query->where($clause, $value);
+                }
             }
 
             if ($order != null)
@@ -374,38 +423,107 @@ namespace Framework
 
             if ($first)
             {
-//                return $first;
                 $newUser =  new $class(
-                    $query->first()
+                    $first
                 );
-//                $newUser->connector = null;
                 return $newUser;
             }
 
             return null;
         }
 
-        public static function all($where = array(), $fields = array("*"), $order = null, $direction = null, $limit = null, $page = null)
+        /**
+         * @param array $where
+         * @param array $fields
+         * @param null $order
+         * @param null $direction
+         * @param null $limit
+         * @param null $page
+         * @param null $group
+         * @return mixed
+         */
+        public static function all($where = array(), $fields = array("*"), $order = null, $direction = null, $limit = null, $page = null,$group = null)
         {
             $model = new static();
-            return $model->_all($where, $fields, $order, $direction, $limit, $page);
+            return $model->_all($where, $fields, $order, $direction, $limit, $page, null,$group);
         }
 
-        protected function _all($where = array(), $fields = array("*"), $order = null, $direction = null, $limit = null, $page = null)
+        /**
+         * @param array $where
+         * @param array $fields
+         * @param null $order
+         * @param null $direction
+         * @param null $limit
+         * @param null $page
+         * @param null $allJoins - the property from model
+         * @param $group used for GROUP BY
+         * @throws
+         * @return mixed
+         */
+        public static function allWithJoins($where = array(), $fields = array("*"), $order = null, $direction = null, $limit = null, $page = null, $allJoins = null, $group = null)
+        {
+            $model = new static();
+            $joins = array();
+            if (count($model->joins) != 0){
+                if (!is_null($allJoins)){
+                    if (!property_exists(get_class($model), $allJoins)){
+                        throw new Model\Exception('The join property is not defined');
+                    }
+                    $joins = $model->$allJoins;
+                }else{
+                    $joins = $model->joins;
+
+                }
+            }
+
+
+
+
+            return $model->_all($where, $fields, $order, $direction, $limit, $page, $joins, $group);
+        }
+
+        /**
+         * @param array $where
+         * @param array $fields
+         * @param null $order
+         * @param null $direction
+         * @param null $limit
+         * @param null $page
+         * @param array $joins
+         * @param null $group
+         * @return array
+         */
+        protected function _all($where = array(), $fields = array("*"), $order = null, $direction = null, $limit = null, $page = null, $joins = array(), $group = null)
         {
             $query = $this
                 ->connector
                 ->query()
                 ->from($this->table, $fields);
 
-            foreach ($where as $clause => $value)
-            {
-                $query->where($clause, $value);
+            foreach ($joins as $table => $values) {
+                $query->join($table,$values['ON'], $values['fields']);
             }
 
-            if ($order != null)
+
+            foreach ($where as $clause => $value)
             {
+                if(is_array($value)){
+                    if (!isset($value[1])){
+                        $query->where($clause, $value[0]);
+                    }else{
+                        $query->where($clause, $value[0], $value[1]);
+                    }
+                }else{
+                    $query->where($clause, $value);
+                }
+            }
+
+            if ($order != null){
                 $query->order($order, $direction);
+            }
+
+            if ($group != null){
+                $query->group($group);
             }
 
             if ($limit != null)
@@ -426,23 +544,78 @@ namespace Framework
             return $rows;
         }
 
-        public static function count($where = array())
-        {
+        /**
+         * @param array $where
+         * @param $allJoins - takes into account joins
+         * @param null $group - GROUP BY
+         * @return mixed
+         * @throws
+         */
+        public static function countWithJoins($where = array(),$allJoins = null,$group = null){
+
             $model = new static();
-            return $model->_count($where);
+
+            $joins = array();
+            if (count($model->joins) != 0){
+                if (!is_null($allJoins)){
+                    if (!property_exists(get_class($model), $allJoins)){
+                        throw new Model\Exception('The join property is not defined');
+                    }
+                    $joins = $model->$allJoins;
+                }else{
+                    $joins = $model->joins;
+
+                }
+            }
+            return $model->_count($where, $group, $joins);
         }
 
-        protected function _count($where = array())
+        /**
+         * @param array $where
+         * @param $group
+         * @return mixed
+         */
+        public static function count($where = array(), $group = null, $joins = null)
         {
+            $model = new static();
+            return $model->_count($where, $group, $joins);
+        }
+
+        /**
+         * @param array $where
+         * @param null $group
+         * @param null $joins
+         * @return mixed
+         */
+        protected function _count($where = array(),$group = null, $joins = null)
+        {
+            // query object
             $query = $this
                 ->connector
                 ->query()
                 ->from($this->table);
 
+            foreach ($joins as $table => $values) {
+                $query->join($table,$values['ON'], $values['fields']);
+            }
+
             foreach ($where as $clause => $value)
             {
-                $query->where($clause, $value);
+                if(is_array($value)){
+                    if (!isset($value[1])){
+                        $query->where($clause, $value[0]);
+                    }else{
+                        $query->where($clause, $value[0], $value[1]);
+                    }
+                }else{
+                    $query->where($clause, $value);
+                }
             }
+
+            if ($group != null){
+                $query->group($group);
+            }
+
 
             return $query->count();
         }
