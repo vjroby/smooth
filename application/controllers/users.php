@@ -59,10 +59,10 @@ class Users extends Controller{
             if (!$error)
             {
                 $user = User::first(array(
-                    "email = ?" => $email,
-                    "password = ?" => $password,
-                    "live = ?" => true,
-                    "deleted = ?" => false
+                    "email" => $email,
+                    "password" => $password,
+                    "live" => true,
+                    "deleted" => false
                 ));
 
                 if (!empty($user))
