@@ -59,11 +59,11 @@ try{
     $session = new Framework\Session();
     Framework\Registry::set("session", $session->initialize());
 
-// 9. load the HttpRequest Class
+// 7. load the HttpRequest Class
     $httpRequest = new \Framework\HttpRequest();
     Framework\Registry::set('httpRequest', $httpRequest);
 
-// 7. load the Router class and provide the url + extension
+// 8. load the Router class and provide the url + extension
     $router = new Framework\Router(array(
         "url" => isset($_GET["url"]) ? $_GET["url"] : "home/index",
         "extension" => isset($_GET["url"]) ? $_GET["url"] : "html"
@@ -73,10 +73,11 @@ try{
     // include custom routes
     include(__DIR__.DIRECTORY_SEPARATOR."routes.php");
 
+// 9. load the language file
+    $language = new \Framework\Language();
+    Framework\Registry::set('language',$language->load(DEFAULT_LANGUAGE));
 
-
-
-// 8. dispatch the current request
+// 8. dispatch the current request after adding all the routes
     $router->dispatch();
 // 10. unset global variables
     unset($configuration);
