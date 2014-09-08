@@ -58,7 +58,7 @@ namespace Shared
                 if ($user)
                 {
                     $controller->user = \User::first(array(
-                        "id = ?" => $user
+                        "id" => $user
                     ));
                 }
             });

@@ -2,6 +2,7 @@
 namespace Framework\Database
 {
     use Framework\Base as Base;
+    use Framework\Database;
     use Framework\Utility\ArrayMethods as ArrayMethods;
     use Framework\Database\Exception as Exception;
 
@@ -45,7 +46,17 @@ namespace Framework\Database
         /**
          * @read
          */
+        protected $_group;
+
+        /**
+         * @read
+         */
         protected $_direction;
+
+        /**
+         * @readwrite
+         */
+        public  $_params = array();
 
         /**
          * @read
@@ -55,7 +66,7 @@ namespace Framework\Database
         /**
          * @read
          */
-        protected $_where = array();
+        protected $_where ;
         /**
          * @readwrite
          */
@@ -103,8 +114,8 @@ namespace Framework\Database
         protected function _buildSelect()
         {
             $fields = array();
-            $where = $order = $limit = $join = "";
-            $template = "SELECT %s FROM %s %s %s %s %s";
+            $where = $order = $limit = $join = $group = "";
+            $template = "SELECT %s FROM %s %s %s %s %s %s";
 
             foreach ($this->fields as $table => $_fields)
             {
@@ -132,16 +143,21 @@ namespace Framework\Database
             $_where = $this->where;
             if (!empty($_where))
             {
-                // TODO bind_params
-                $joined = join(" AND ", $_where);
-                $where = "WHERE {$joined}";
+
+
+                $where = " WHERE " . $_where;
             }
 
             $_order = $this->order;
             if (!empty($_order))
             {
                 $_direction = $this->direction;
-                $order = "ORDER BY {$_order} {$_direction}";
+                $order = " ORDER BY {$_order} {$_direction} ";
+            }
+            $_group = $this->group;
+            if (!empty($_group))
+            {
+                $group = " GROUP BY {$_group} ";
             }
 
             $_limit = $this->limit;
@@ -151,7 +167,7 @@ namespace Framework\Database
 
                 if ($_offset)
                 {
-                    $limit = "LIMIT {$_limit}, {$_offset}";
+                    $limit = "LIMIT {$_offset}, {$_limit}";
                 }
                 else
                 {
@@ -159,7 +175,7 @@ namespace Framework\Database
                 }
             }
 
-            return sprintf($template, $fields, $this->from, $join, $where, $order, $limit);
+            return sprintf($template, $fields, $this->from, $join, $where, $group, $order, $limit);
         }
 
         protected function _buildInsert($data)
@@ -170,6 +186,7 @@ namespace Framework\Database
             // TODO bind_params
             foreach ($data as $field => $value)
             {
+                $this->_params[":".$field] = $value;
                 $fields[] = $field;
                 $values[] = ':'.$field;
             }
@@ -186,10 +203,11 @@ namespace Framework\Database
             $parts = array();
             $where = $limit = "";
             $template = "UPDATE %s SET %s %s %s";
-            // TODO bind_params
+
             foreach ($data as $field => $value)
             {
-                $parts[] = "{$field} = ".$this->_quote($value);
+                $this->_params[":".$field] = $value;
+                $parts[] = "{$field} = :".$field;
             }
 
             $parts = join(", ", $parts);
@@ -197,8 +215,8 @@ namespace Framework\Database
             $_where = $this->where;
             if (!empty($_where))
             {
-                $joined = join(", ", $_where);
-                $where = "WHERE {$joined}";
+
+                $where = "WHERE {$_where}";
             }
 
             $_limit = $this->limit;
@@ -220,8 +238,8 @@ namespace Framework\Database
             if (!empty($_where))
             {
                 // TODO bind_params
-                $joined = join(", ", $_where);
-                $where = "WHERE {$joined}";
+                //$joined = join(", ", $_where);
+                $where = "WHERE {$_where}";
             }
 
             $_limit = $this->limit;
@@ -247,7 +265,7 @@ namespace Framework\Database
                 $sql = $this->_buildUpdate($data);
             }
             $this->_statement = $this->_connector->service->prepare($sql);
-            $this->_connector->bind_params($this->_statement,$data);
+            $this->_connector->bind_params($this->_statement,$this->_params);
 
 
             $result = $this->_statement->execute();
@@ -296,7 +314,7 @@ namespace Framework\Database
             return $this;
         }
 
-        public function join($join, $on, $fields = array())
+        public function join($join, $on, $fields = array(), $type = Database::LEFT_JOIN)
         {
             if (empty($join))
             {
@@ -309,7 +327,22 @@ namespace Framework\Database
             }
 
             $this->_fields += array($join => $fields);
-            $this->_join[] = "JOIN {$join} ON {$on}";
+            $join_type = '';
+
+            switch($type){
+                case Database::LEFT_JOIN:
+                    $join_type = ' LEFT ';
+                    break;
+
+                case Database::RIGHT_JOIN:
+                    $join_type = ' RIGHT ';
+                    break;
+
+                case Database::OUTER_JOIN:
+                    $join_type = ' OUTER ';
+                    break;
+            }
+            $this->_join[] = $join_type." JOIN {$join} ON {$on}";
 
             return $this;
         }
@@ -340,27 +373,65 @@ namespace Framework\Database
             return $this;
         }
 
-        public function where()
-        {
-            $arguments = func_get_args();
+        /**
+         * Add a where clause to the query.
+         * @param string $field The column to wich this clause applies.
+         * @param mixed $value [optional]
+         * <p>The value to compare the column with.</p>
+         * <p>Leave this parameter and the operator parameter blank (NULL) to have the "IS NULL" operator (WHERE column IS NULL).</p>
+         * <p>If this parameter is an array and no operator is given the "IN" operator will be used (WHERE column IN (value1, value2).</p>
+         * <p>If this parameter is an array you can also specify the "NOT IN" operator as the next parameter (WHERE column NOT IN (value1, value2).</p>
+         * <p>If this parameter is a string and no operator is given the "=" operator will be used (WHERE column = value).</p>
+         * @param string $operator [optional] <p>The operator that will be used (e.g. "IS NULL", "IN", "NOT IN", "=", "<>", ...).</p>
+         * @param string $concatenator [optional] <p>Leave empty if this is the first where clause of the query.</p>
+         * <p>Possible values "AND" and "OR". You can also use the andwhere and orwhere functions of this class.</p>
+         * @return db
+         */
+        public function where($field, $value = NULL, $operator = NULL, $concatenator = NULL){
+            if(empty($concatenator)){
+                if (!empty($this->_where)){
+                    $concatenator = " AND ";
+                }else{
+                    $concatenator = " ";
 
-            if (sizeof($arguments) < 1)
-            {
-                throw new Exception\Argument("Invalid argument");
+                }
             }
-
-            $arguments[0] = preg_replace("#\?#", "%s", $arguments[0]);
-
-            foreach (array_slice($arguments, 1, null, true) as $i => $parameter)
-            {
-                $arguments[$i] = $this->_quote($arguments[$i]);
-            }
-
-            $this->_where[] = call_user_func_array("sprintf", $arguments);
-
+            $this->_where .= $this->condition(trim($field), $value, $operator, $concatenator);
             return $this;
         }
+//        public function where()
+//        {
+//            $arguments = func_get_args();
+//
+//            if (sizeof($arguments) < 1)
+//            {
+//                throw new Exception\Argument("Invalid argument");
+//            }
+//            $a = $arguments[0];
+//            if ($arguments[0] !== 0){
+//                $arguments[0] = preg_replace("#\?#", "%s", $arguments[0]);
+//            }elseif(isset($arguments[1])){
+//                $arguments[0] = $arguments[1];
+//            }
+//
+//            foreach (array_slice($arguments, 1, null, true) as $i => $parameter)
+//            {
+//                $arguments[$i] = $this->_quote($arguments[$i]);
+//            }
+//
+//            $this->_where[] = call_user_func_array("sprintf", $arguments);
+//
+//            return $this;
+//        }
 
+
+        public function group($item){
+            if (is_array($item)){
+                $this->_group = implode(',', $item);
+            }else{
+                $this->_group = $item;
+            }
+        }
         public function first()
         {
             $limit = $this->_limit;
@@ -400,6 +471,8 @@ namespace Framework\Database
             {
                 $this->_fields = $fields;
             }
+
+
             if ($limit)
             {
                 $this->_limit = $limit;

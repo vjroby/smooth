@@ -10,8 +10,8 @@ namespace Framework
 
     class Router extends Base{
         /**
-        * @readwrite
-        */
+         * @readwrite
+         */
         protected $_url;
 
         /**
@@ -28,6 +28,10 @@ namespace Framework
          * @read
          */
         protected $_action;
+        /**
+         * @read
+         */
+        protected $_httpRequestMethod;
 
         protected $_routes = array();
 
@@ -82,9 +86,12 @@ namespace Framework
                 ));
                 Registry::set("controller", $instance);
             }
+            catch(\Framework\Database\Exception $e){
+                throw new \Framework\Database\Exception($e->getMessage());
+            }
             catch (\Exception $e)
             {
-                throw new Exception\Controller("Controller {$name} not found");
+                throw new Exception\Controller("Controller {$name} not found",$name);
             }
 
             Events::fire("framework.router.controller.after", array($controller, $parameters));
@@ -153,6 +160,9 @@ namespace Framework
         {
 
             $url= $this->url;
+
+            //checks if the first element in url is api and sets api request
+            $this->setApiRequesIfNeeded($url);
             $parameters = array();
             $controller = "index";
             $action = "index";
@@ -161,7 +171,9 @@ namespace Framework
 
             foreach ($this->_routes as $route)
             {
+
                 $matches = $route->matches($url);
+
                 if ($matches)
                 {
                     $controller = $route->controller;
@@ -169,6 +181,7 @@ namespace Framework
                     $parameters = $route->parameters;
 
                     $this->_pass($controller, $action, $parameters);
+
                     return;
                 }
             }
@@ -199,6 +212,16 @@ namespace Framework
             }
             Events::fire("framework.router.dispatch.after", array($url, $controller, $action, $parameters));
             $this->_pass($controller, $action, $parameters);
+        }
+
+
+        // for api requests
+        public function setApiRequesIfNeeded($url){
+            $arr_url = explode('/', $url);
+            if ($arr_url[0] === "api"){
+                Registry::get('httpRequest')->setIsApiRequest(true);
+
+            }
         }
     }
 }

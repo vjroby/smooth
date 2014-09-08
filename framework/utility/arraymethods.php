@@ -108,6 +108,30 @@ namespace Framework\Utility
             return $array;
 
         }
+
+        /**
+         * @param array $arr
+         * @param $key
+         * @return null
+         */
+        public static function isNumber(array $arr, $key){
+            if (isset($arr[$key]) && is_numeric($arr[$key])){
+                return $arr[$key];
+            }else{
+                return null;
+            }
+        }
+
+        public static function isWithinValues(array $arr, $key, $within){
+            $within = is_array($within) ? $within : array($within);
+
+            if (isset($arr[$key]) && in_array($arr[$key], $within)){
+                return $arr[$key];
+            }else{
+                return null;
+            }
+
+        }
     }
 
 

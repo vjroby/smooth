@@ -51,10 +51,16 @@ namespace Framework
          * @readwrite
          */
         protected $_defaultLayout = "layouts/standard";
+
         /**
          * @readwrite
          */
         protected $_defaultLayoutAjax = "layouts/ajax";
+
+        /**
+         * @readwrite
+         */
+        protected $_defaultLayoutApi = "layouts/api";
 
         /**
          * @readwrite
@@ -70,6 +76,11 @@ namespace Framework
          * @readwrite
          */
         protected $_isAjaxNavigation = false;
+
+        /**
+         * @readwrite
+         */
+        protected $_isApiNavigation = false;
 
         protected function _getExceptionForImplementation($method)
         {
@@ -88,6 +99,10 @@ namespace Framework
             $defaultContentType = $this->getDefaultContentType();
             $results = null;
 
+            if ($this->isApiNavigation ){
+                $this->renderApiNavigation();
+            }
+
             $doAction = $this->getWillRenderActionView() && $this->getActionView();
             $doLayout = $this->getWillRenderLayoutView() && $this->getLayoutView();
 
@@ -95,9 +110,14 @@ namespace Framework
             {
                 $isAjaxRequest = Registry::get('httpRequest')->getIsAjaxRequest();
 
-                if ($isAjaxRequest === true){
+                // if there is an api request from ajax like in forms we must not load ajax navigation
+                // the action file and layout for api (json) must be loaded
+                if ($isAjaxRequest === true && !$this->isApiNavigation){
                     $this->renderAjaxNavigation();
                 }
+//                if ($isAjaxRequest === true || !$this->isApiNavigation){
+//                    Smooth::$_cleanRequest = true;
+//                }
 
                 $view = $this->getLayoutView();
                 if ($doAction)
@@ -120,9 +140,10 @@ namespace Framework
                     $this->setWillRenderActionView(false);
                 }
             }
+
             catch (\Exception $e)
             {
-                throw new View\Exception\Renderer("Invalid layout/template syntax.".$e->getMessage());
+                throw new View\Exception\Renderer("Invalid layout/template syntax. From View Class: ".$e->getMessage());
             }
 
             Events::fire("framework.controller.render.after", array($this->name));
@@ -154,7 +175,7 @@ namespace Framework
 
                 $options_view["actionFile"] = APP_PATH."/{$defaultPath}/{$controller}/{$action}.{$defaultExtension}";
 
-               // $this->setActionView($view);
+                // $this->setActionView($view);
             }
             $view = new View($options_view);
             $this->setLayoutView($view);
@@ -223,11 +244,41 @@ namespace Framework
             $view->setFile(APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}");
         }
 
+
+        public function renderApiNavigation(){
+
+            Registry::get('httpRequest')->isApiRequest = true;
+
+            $view = $this->getLayoutView();
+            $defaultPath = $this->getDefaultPath();
+            $defaultLayout = $this->getDefaultLayoutApi();
+            $defaultExtension = $this->getDefaultExtension();
+            $this->setWillRenderActionView(false);
+            $view->setFile(APP_PATH."/{$defaultPath}/{$defaultLayout}.{$defaultExtension}");
+            $view->setIsForApi(true);
+        }
+
+        /**
+         * method for loading custom layouts file from controller
+         *
+         * @param $layoutFileName
+         */
+        public function setCustomLayoutView($layoutFileName){
+            //$this->_layoutView = $layoutFileName;
+
+            $view = $this->getLayoutView();
+            $layout =  explode('/',$this->getDefaultLayout());
+            $defaultPath =$this->getDefaultPath();
+            $defaultExtension = $this->getDefaultExtension();
+            $view->setFile(APP_PATH."/{$defaultPath}/{$layout[0]}/{$layoutFileName}.{$defaultExtension}");
+        }
+
         public function __destruct()
         {
             Events::fire("framework.controller.destruct.before", array($this->name));
             $this->render();
             Events::fire("framework.controller.destruct.after", array($this->name));
         }
+
     }
 }
