@@ -1,4 +1,5 @@
 <?php
+
 //
 //include_once('framework'.DIRECTORY_SEPARATOR.'smooth.php');
 //
