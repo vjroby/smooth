@@ -5,6 +5,9 @@ define("DEBUG", TRUE);
 define("DEFAULT_LANGUAGE", 'en');
 // 1. define the default path for includes
 define("APP_PATH", dirname(dirname(__FILE__)));
+if (DEBUG == true){
+    error_reporting(E_ALL && ~E_STRICT);
+}
 try{
     // implement another spl_autoloader fuction for including  the new library imagine
     //, class with capital first letter
