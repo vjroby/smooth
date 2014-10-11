@@ -9,7 +9,7 @@
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="196x196" href="<?php echo \Framework\Smooth::baseUrl(); ?>/images/touch/chrome-touch-icon-196x196.png">
+    <link rel="icon" sizes="196x196" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/images/touch/chrome-touch-icon-196x196.png">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,7 +25,7 @@
     <!-- build:css styles/components/main.min.css -->
     <link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/h5bp.css">
     <link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/components/components.css">
-    <link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/main.css">
+    <link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(true); ?>/css/main.css">
     <!-- endbuild -->
 
     <link rel="stylesheet" href="<?php echo \Framework\Smooth::baseUrl(); ?>/css/bootstrap.css"/>

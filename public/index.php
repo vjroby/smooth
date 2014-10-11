@@ -83,7 +83,13 @@ try{
 
 // 8. dispatch the current request after adding all the routes
     $router->dispatch();
-// 10. unset global variables
+
+// 10. Composer autoload
+    if (file_exists(APP_PATH.DIRECTORY_SEPARATOR.'application'.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'autoload.php')){
+        require_once(APP_PATH.DIRECTORY_SEPARATOR.'application'.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'autoload.php');
+    }
+
+// 11. unset global variables
     unset($configuration);
     unset($database);
     unset($cache);
