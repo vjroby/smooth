@@ -18,11 +18,18 @@ namespace Framework
          */
         protected $_options;
 
+        /**
+         * @param $method
+         * @return Exception\Implementation|Core\Exception\Argument
+         */
         protected function _getExceptionForImplementation($method)
         {
             return new Exception\Implementation("{$method} method not implemented");
         }
 
+        /**
+         * @throws Exception\Argument
+         */
         public function initialize()
         {
             Events::fire("framework.configuration.initialize.before", array($this->type, $this->options));
