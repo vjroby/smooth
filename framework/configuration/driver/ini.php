@@ -7,6 +7,12 @@ namespace Framework\Configuration\Driver
 
     class Ini extends Configuration\Driver{
 
+        /**
+         * @param $config
+         * @param $key
+         * @param $value
+         * @return mixed
+         */
         protected function _pair($config, $key, $value)
         {
             if (strstr($key, "."))
@@ -28,6 +34,18 @@ namespace Framework\Configuration\Driver
             return $config;
         }
 
+        /**
+         *
+         * with this method is read the configuration by the path given,
+         * for different parts of the framework
+         * it parses the ini file and returns an object
+         * If no file is found in the application/configuration folder throws an exception
+         *
+         * @param $path
+         * @return mixed
+         * @throws Exception\Argument
+         * @throws Exception\Syntax
+         */
         public function parse($path)
         {
             if (empty($path))

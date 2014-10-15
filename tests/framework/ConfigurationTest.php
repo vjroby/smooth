@@ -13,8 +13,6 @@ namespace Tests\Framework\Configuration
                 "type" => "ini"
             ));
 
-            $configuration->initialize();
-
             $this->assertInstanceOf('Framework\Configuration', $configuration);
         }
     }
